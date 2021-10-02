@@ -1,25 +1,51 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState, useEffect } from "react";
+import { useDispatch } from "react-redux";
+import axios from "axios";
+
+
+import { noteActions } from "./store/note-slice";
+import NoteList from "./components/NoteList";
+
+import "./App.css";
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+  const [isLoading, setIsLoading] = useState(false);
+  const [notes, setNotes] = useState([]);
+
+  const dispatch = useDispatch()
+
+  // fetch data from server
+  async function fetchNotes() {
+    setIsLoading(true)
+
+    try {
+      const response = await axios.get("/notes/");
+      setNotes(response.data)
+      setIsLoading(false);
+    } catch (error) {
+      console.log(error);
+      setIsLoading(false);
+    }
+  }
+
+  // fetch data on first render
+  useEffect(()=>{
+    fetchNotes();
+  },[])
+
+  useEffect(() => {
+    dispatch(noteActions.setNotes(notes));
+  },[notes ,dispatch]);
+
+
+  if(isLoading){
+    return <h2>Loading...</h2>
+  }
+
+
+  return <div>
+    <NoteList/>
+  </div>;
 }
 
 export default App;
