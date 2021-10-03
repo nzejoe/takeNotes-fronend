@@ -1,16 +1,25 @@
 import React from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 
-const Note = ({ title, text, created,label:labelID }) => {
+import { noteActions } from "../../store/note-slice";
+
+const Note = ({id, title, text, created,label:labelID }) => {
   const labels = useSelector(state => state.label.labels)
 
+  //dispatch
+  const dispatch = useDispatch()
+
+  // get label name
   const label = labels.find((thisLabel) => thisLabel.id === labelID);
-
   let labelName = ''
-
   if(label){ // if note has label
     labelName = label.name // set name
   }
+
+  // delete action
+  const handleDelete = () => {
+    dispatch(noteActions.deleteNote(id));
+  };
 
 
 
@@ -24,6 +33,10 @@ const Note = ({ title, text, created,label:labelID }) => {
       <p>
         <small>{labelName}</small>
       </p>
+      <div className="actions">
+        <button>Edit</button>
+        <button onClick={handleDelete}>Delete</button>
+      </div>
       <hr />
     </div>
   );

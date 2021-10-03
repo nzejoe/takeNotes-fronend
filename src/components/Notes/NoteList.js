@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useSelector } from 'react-redux'
 
 import { Note } from '.';
@@ -7,7 +7,9 @@ import { AddNote } from '.';
 const NoteList = () => {
   const notes = useSelector(state => state.note.filteredNotes);
 
-  console.log(notes);
+  useEffect(()=>{
+
+  })
 
   return (
     <div>

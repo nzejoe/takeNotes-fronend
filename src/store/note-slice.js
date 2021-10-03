@@ -10,9 +10,9 @@ const noteSlice = createSlice({
     allNotes: [],
     filteredNotes: [],
     refresh: false,
+    csrf_token: Cookies.get("csrftoken"),
   },
   reducers: {
-
     setNotes(state, action) {
       state.allNotes = action.payload; // set all notes with returned note data from server
       state.filteredNotes = state.allNotes; // set filtered notes with all notes
@@ -28,9 +28,33 @@ const noteSlice = createSlice({
       );
     },
 
+    deleteNote(state, action) {
+      const id = action.payload;
+
+      const sendRequest = async () => {
+        try {
+          const response = await axios({
+            method: "DELETE",
+            url: `notes/${id}/`,
+            headers: {
+              "Content-type": "application/json",
+              "X-CSRFToken": state.csrf_token,
+            },
+          });
+          console.log(response.status);
+        } catch (error) {
+          console.log(error);
+        }
+      };
+
+      sendRequest();
+
+      // refresh the note list
+      state.refresh = !state.refresh;
+    },
+
     addNote(state, action) {
       const note = action.payload;
-      const csrf_token = Cookies.get("csrftoken");
 
       const sendData = async () => {
         // make the function async to make sure data was sent before refreshing note list
@@ -41,7 +65,7 @@ const noteSlice = createSlice({
             url: "/notes/",
             headers: {
               "Content-type": "application/json",
-              "X-CSRFToken": csrf_token,
+              "X-CSRFToken": state.csrf_token,
             },
             data: note,
           });
