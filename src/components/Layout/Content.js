@@ -10,7 +10,7 @@ const Content = () => {
         <LabelList />
       </aside>
       <main>
-        <NoteList />
+        <NoteList notes/>
       </main>
     </div>
   );

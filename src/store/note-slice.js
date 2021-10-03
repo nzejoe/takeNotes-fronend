@@ -7,13 +7,27 @@ import Cookies from "js-cookie";
 const noteSlice = createSlice({
   name: "note",
   initialState: {
-    notes: [],
+    allNotes: [],
+    filteredNotes: [],
     refresh: false,
   },
   reducers: {
+
     setNotes(state, action) {
-      state.notes = action.payload;
+      state.allNotes = action.payload; // set all notes with returned note data from server
+      state.filteredNotes = state.allNotes; // set filtered notes with all notes
     },
+
+    getAllNotes(state) {
+      state.filteredNotes = state.allNotes;
+    },
+
+    filterNotes(state, action) {
+      state.filteredNotes = state.allNotes.filter(
+        (note) => note.label === action.payload
+      );
+    },
+
     addNote(state, action) {
       const note = action.payload;
       const csrf_token = Cookies.get("csrftoken");
