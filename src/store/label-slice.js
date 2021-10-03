@@ -4,7 +4,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const labelSlice = createSlice({
     name:'label',
     initialState:{
-        labels: []
+        labels: [{id:0 ,name: ''}]
     },
     reducers: {
         setLabels(state, action){

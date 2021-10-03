@@ -8,7 +8,7 @@ import { Label } from ".";
 const LabelList = () => {
   const labels = useSelector((state) => state.label.labels);
   const dispatch = useDispatch();
-  console.log(labels);
+  
 
   const fetchLabels = useCallback(async () => {
     try {
