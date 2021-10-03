@@ -19,7 +19,7 @@ const NoteList = () => {
     setIsLoading(true);
 
     try {
-      const response = await axios.get("/notes/");
+      const response = await axios.get('/notes/');
       dispatch(noteActions.setNotes(response.data));
       setIsLoading(false);
     } catch (error) {

@@ -1,10 +1,11 @@
 import React from 'react'
+import { NavLink } from 'react-router-dom'
 
-const Label = ({id, name}) => {
+const Label = ({id, name, className}) => {
     return (
-        <div>
+        <NavLink to={`/label/${name}/`} activeClassName={className}>
             {name}
-        </div>
+        </NavLink>
     )
 }
 

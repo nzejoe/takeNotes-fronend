@@ -1,14 +1,30 @@
-import { NoteList } from "./components/Notes";
-import { LabelList } from "./components/Labels";
+import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom'
+
+import Home from './Routes/Home';
+import LabelRoute from './Routes/LabelRoute';
 
 import "./App.css";
 
 function App() {
   return (
-    <div>
-      <LabelList/>
-      <NoteList />
-    </div>
+    <Router>
+      <Switch>
+        <Route path="/" exact>
+          <Redirect to="/home" />
+        </Route>
+        <Route path="/home" exact>
+          <Home />
+        </Route>
+        <Route path="/label/:id" exact>
+          <LabelRoute />
+        </Route>
+        <Route path="*">
+          <Redirect to="/home">
+            <Home />
+          </Redirect>
+        </Route>
+      </Switch>
+    </Router>
   );
 }
 
