@@ -53,6 +53,31 @@ const noteSlice = createSlice({
       state.refresh = !state.refresh;
     },
 
+    updateNote(state, action){
+      const { id, noteUpdate } = action.payload;
+
+      const sendRequest = async() => {
+        try {
+          // eslint-disable-next-line
+          const response = await axios({
+            method: "PUT",
+            url: `notes/${id}/`,
+            headers: {
+              "x-csrftoken": state.csrf_token,
+              "Content-type": "application/json",
+            },
+            data: noteUpdate,
+          });
+        } catch (error) {
+          console.log(error)
+        }
+      };
+
+      // refresh the note list
+      state.refresh = !state.refresh;
+      sendRequest();
+    },
+
     addNote(state, action) {
       const note = action.payload;
 
