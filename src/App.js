@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-d
 import { useSelector, useDispatch } from 'react-redux';
 import axios from 'axios';
 
+
 // slice
 import { noteActions } from './store/note-slice';
 
@@ -11,6 +12,9 @@ import Home from './Routes/Home';
 import LabelRoute from './Routes/LabelRoute';
 
 import "./App.css";
+
+// set axios default baseURL
+axios.defaults.baseURL = "http://localhost:8000/";
 
 function App() {
   const refresh = useSelector((state) => state.note.refresh);

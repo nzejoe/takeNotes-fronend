@@ -1,24 +1,33 @@
-import React, { useRef } from 'react';
-import { useDispatch } from 'react-redux';
+import React, { useRef, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { noteActions } from '../../store/note-slice';
 
 const AddNote = () => {
+    const labels = useSelector(state => state.label.labels)
+    const [selectLabel, setSelectedLabel] = useState('');
     const titleRef = useRef();
     const textRef = useRef();
+
 
     const dispatch = useDispatch();
 
     const handleSubmit = (event) => {
         event.preventDefault();
+        setSelectedLabel('')
         const newNote = {
             title: titleRef.current.value,
             text: textRef.current.value,
-            label: 2,
+            label: selectLabel,
         }
+
         dispatch(noteActions.addNote(newNote));
         titleRef.current.value = '';
         textRef.current.value = ''
+    };
+
+    const labelChangeHandler = (event) => {
+      setSelectedLabel(event.target.value)
     };
 
     return (
@@ -31,6 +40,15 @@ const AddNote = () => {
           <div className="form-group">
             <label htmlFor="text"></label>
             <textarea id="text" placeholder="note" ref={textRef} cols="50" rows="5"/>
+          </div>
+          <div className="form-group">
+            <label htmlFor="label">label</label>
+            <select name="label" id="label" onChange={labelChangeHandler} value={selectLabel}>
+              <option value=''>Choose label</option>
+              {labels.map(label => {
+                return <option key={label.id} value={label.id}>{label.name}</option>;
+              })}
+            </select>
           </div>
           <button type="submit">save</button>
         </form>

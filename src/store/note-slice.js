@@ -15,7 +15,7 @@ const noteSlice = createSlice({
   reducers: {
     setNotes(state, action) {
       state.allNotes = action.payload; // set all notes with returned note data from server
-      state.filteredNotes = state.allNotes; // set filtered notes with all notes
+      state.filteredNotes = state.allNotes; // set filtered notes with all notes from state
     },
 
     getAllNotes(state) {
