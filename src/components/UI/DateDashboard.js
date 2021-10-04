@@ -1,6 +1,6 @@
 import React from 'react'
 
-const DateDashboad = ({date}) => {
+const DateDashboard = ({date}) => {
     const daysWeek = ['Sunday','Monday', 'Tuesday', 'WednesDay', 'Thursday', 'Friday', 'Saturday'];
     const month = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'] 
     const dateCreated = new Date(date)
@@ -28,4 +28,4 @@ const DateDashboad = ({date}) => {
     );
 }
 
-export default DateDashboad;
+export default DateDashboard;

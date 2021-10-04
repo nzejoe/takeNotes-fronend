@@ -2,7 +2,10 @@ import React, { useState, useRef, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
 import { noteActions } from "../../store/note-slice";
-import { DateDashboad } from "../UI";
+import { DateDashboard } from "../UI";
+
+// style
+import classes from './Note.module.css'
 
 const Note = ({ id, title, text, created, label: labelID }) => {
   const [edit, setEdit] = useState(false);
@@ -106,12 +109,12 @@ const Note = ({ id, title, text, created, label: labelID }) => {
   );
 
   return (
-    <div ref={formRef}>
+    <div ref={formRef} className={classes.note}>
       {edit ? (
         editForm
       ) : (
         <div>
-          <DateDashboad date={created}/>
+          <DateDashboard date={created} />
           <h4>{title}</h4>
           <p>{text}</p>
           <p>
@@ -121,7 +124,6 @@ const Note = ({ id, title, text, created, label: labelID }) => {
             <button onClick={() => setEdit(true)}>Edit</button>
             <button onClick={handleDelete}>Delete</button>
           </div>
-          <hr />
         </div>
       )}
     </div>

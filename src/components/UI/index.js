@@ -1,3 +1,3 @@
-import DateDashboad from "./DateDashboad";
+import DateDashboard from "./DateDashboard";
 
-export {DateDashboad};
+export {DateDashboard};

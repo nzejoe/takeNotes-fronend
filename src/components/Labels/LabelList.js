@@ -29,9 +29,9 @@ const LabelList = () => {
 
   return (
     <div>
-      <NavLink to="/home" activeClassName={classes.active}>Notes</NavLink>
+      <NavLink to="/home" activeClassName={classes.active} className={classes.label}>Notes</NavLink>
       {labels.map((label) => {
-        return <Label key={label.id} {...label} className={classes.active}/>;
+        return <Label key={label.id} {...label} classes={classes}/>;
       })}
     </div>
   );
