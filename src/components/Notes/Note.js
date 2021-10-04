@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
 import { noteActions } from "../../store/note-slice";
+import { DateDashboad } from "../UI";
 
 const Note = ({ id, title, text, created, label: labelID }) => {
   const [edit, setEdit] = useState(false);
@@ -110,9 +111,7 @@ const Note = ({ id, title, text, created, label: labelID }) => {
         editForm
       ) : (
         <div>
-          <p>
-            <small>{created}</small>
-          </p>
+          <DateDashboad date={created}/>
           <h4>{title}</h4>
           <p>{text}</p>
           <p>
