@@ -1,15 +1,20 @@
-import React, { useCallback, useEffect } from 'react';
-import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom'
-import { useSelector, useDispatch } from 'react-redux';
-import axios from 'axios';
+import React, { useEffect } from "react";
+import {
+  BrowserRouter as Router,
+  Route,
+  Switch,
+  Redirect,
+} from "react-router-dom";
 
+import { useSelector, useDispatch } from "react-redux";
+import axios from "axios";
 
 // slice
-import { noteActions } from './store/note-slice';
+import { noteActions } from "./store/note-slice";
 
 // routes
-import Home from './Routes/Home';
-import LabelRoute from './Routes/LabelRoute';
+import Home from "./Routes/Home";
+import LabelRoute from "./Routes/LabelRoute";
 
 import "./App.css";
 
@@ -22,20 +27,14 @@ function App() {
   const dispatch = useDispatch();
 
   // fetch data from server
-  const fetchNotes = useCallback(async () => {
-    try {
-      const response = await axios.get("/notes/");
-      dispatch(noteActions.setNotes(response.data));
-    } catch (error) {
-      console.log(error);
-    }
-  }, [dispatch]);
-
-  // fetch data on first render
   useEffect(() => {
-    fetchNotes();
-  }, [refresh, fetchNotes]); // fetch data whenever the refresh state changes
-
+    axios
+      .get("/notes/")
+      .then((res) => {
+        dispatch(noteActions.setNotes(res.data));
+      })
+      .catch((error) => console.log(error));
+  }, [dispatch, refresh]); // fetch data whenever the refresh state changes
 
   return (
     <Router>
