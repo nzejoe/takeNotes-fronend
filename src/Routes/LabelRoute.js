@@ -7,8 +7,8 @@ import { noteActions } from '../store/note-slice';
 
 const LabelRoute = () => {
     const [labelID, setLabelID] = useState(null)
-    const labels = useSelector(state => state.label.labels)
-    const {name} = useParams()
+    const labels = useSelector(state => state.label.labels);
+    const {name} = useParams();
 
     const dispatch = useDispatch();
 

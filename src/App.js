@@ -10,7 +10,7 @@ import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
 
 // slice
-import { noteActions } from "./store/note-slice";
+import { fetchNotes } from "./store/note-slice";
 
 // routes
 import Home from "./Routes/Home";
@@ -28,12 +28,7 @@ function App() {
 
   // fetch data from server
   useEffect(() => {
-    axios
-      .get("/notes/")
-      .then((res) => {
-        dispatch(noteActions.setNotes(res.data));
-      })
-      .catch((error) => console.log(error));
+    dispatch(fetchNotes())
   }, [dispatch, refresh]); // fetch data whenever the refresh state changes
 
   return (

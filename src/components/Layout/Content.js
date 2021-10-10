@@ -5,7 +5,7 @@ import { LabelList } from "../Labels";
 import { AddNote } from "../Notes";
 
 // styles
-import classes from './Content.module.css'
+import classes from "./Content.module.css";
 
 const Content = () => {
   return (
@@ -14,8 +14,8 @@ const Content = () => {
         <LabelList />
       </aside>
       <main className={classes.main}>
-        <AddNote/>
-        <NoteList notes />
+        <AddNote />
+        <NoteList />
       </main>
     </div>
   );

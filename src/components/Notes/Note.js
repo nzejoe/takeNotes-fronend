@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom";
 
 import { noteActions } from "../../store/note-slice";
 import { DateDashboard } from "../UI";
@@ -20,6 +21,9 @@ const Note = ({ id, title, text, created, label: labelID }) => {
 
   //dispatch
   const dispatch = useDispatch();
+
+  // history
+  const history = useHistory()
 
   // get label name
   const label = labels.find((thisLabel) => thisLabel.id === labelID);
@@ -61,6 +65,9 @@ const Note = ({ id, title, text, created, label: labelID }) => {
     };
     dispatch(noteActions.updateNote({id, noteUpdate}))
     setEdit(false);
+
+    // redirect to home page
+    history.push('/');
   };
 
   // edit form

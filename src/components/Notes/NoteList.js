@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { useSelector } from 'react-redux'
 
 import { Note } from '.';
@@ -9,17 +9,13 @@ import classes from "./NoteList.module.css";
 const NoteList = () => {
   const notes = useSelector(state => state.note.filteredNotes);
 
-  useEffect(()=>{
-
-  })
-
   return (
     <div className={classes['note-list']}>
-      {notes.map((note) => {
+      {notes && notes.map((note) => {
         return <Note key={note.id} {...note} />;
       })}
     </div>
   );
 };
 
-export default NoteList
+export default NoteList;
