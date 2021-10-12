@@ -62,4 +62,8 @@
   text-decoration: underline;
 }
 
+.submit__error {
+  background: rgba(184, 107, 184, 0.822);
+  cursor: not-allowed; 
+}
 /*************** end of form style  *********************/

@@ -11,7 +11,7 @@ const Input = ({
   onChange,
   onFocus,
   onBlur,
-  hasError =true,
+  hasError,
   errorMessage,
   placeholder,
   inputRef,
