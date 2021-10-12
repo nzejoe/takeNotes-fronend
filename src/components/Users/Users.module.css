@@ -1,0 +1,48 @@
+.container {
+  width: 95%;
+  max-width: 20rem;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 10px;
+  box-shadow: 0px 0px 1px rgb(95, 95, 95);
+  background-color: rgb(253, 253, 253);
+}
+
+
+/*************** Form Styles  *********************/
+.form{
+    width: 100%;
+    padding: 1rem;
+}
+
+.form__title{
+    text-align: center;
+    margin-top: 2rem;
+}
+
+.form__actions{
+    width: 100%;
+}
+
+.form__btn{
+    display: block;
+    width: 100%;
+    padding: .5rem 0;
+    border: none;
+    background: rgba(138, 24, 138, 0.822);
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.form__link{
+    text-decoration: none;
+    color: blue;
+}
+
+.form__link:hover{
+    text-decoration: underline;
+}
+/*************** end of form style  *********************/

@@ -15,6 +15,8 @@ import { fetchNotes } from "./store/note-slice";
 // routes
 import Home from "./Routes/Home";
 import LabelRoute from "./Routes/LabelRoute";
+import LoginPage from './Routes/LoginPage'
+import RegisterPage from './Routes/RegisterPage'
 
 import "./App.css";
 
@@ -42,6 +44,12 @@ function App() {
         </Route>
         <Route path="/label/:name" exact>
           <LabelRoute />
+        </Route>
+        <Route path="/account/login">
+          <LoginPage/>
+        </Route>
+        <Route path="/account/register">
+          <RegisterPage/>
         </Route>
         <Route path="*">
           <Redirect to="/home">

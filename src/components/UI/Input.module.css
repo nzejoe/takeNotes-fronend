@@ -1,0 +1,39 @@
+.form__group{
+    width: 100%;
+}
+
+.input__label, .input__error, .form__input{
+    display: block;
+}
+
+.input__label,.input__error{
+   margin-bottom: 2rem;
+}
+
+.input__label{
+    text-transform: capitalize;
+    font-weight: 500;
+    font-size: 1.3rem;
+}
+
+.input__error{
+    display: none;
+    color: red;
+}
+
+.error{
+    display: block;
+}
+
+.form__input{
+    width: 100%;
+    /* padding: .5rem .5rem 0 .5rem; */
+    outline: none;
+    border: none;
+    border-bottom: 1px solid black;
+}
+
+.form__input::placeholder{
+    font-size: 1rem;
+    text-transform: capitalize;
+}

@@ -16,7 +16,13 @@ const LabelList = () => {
 
   const fetchLabels = useCallback(async () => {
     try {
-      const response = await axios.get("/labels/");
+      const response = await axios({
+        url: "/labels/",
+        method: "GET",
+        headers: {
+          authorization: `token 18424a6f4cc2e568c134d128bc0b897b29fcea5e`,
+        },
+      });
       dispatch(labelActions.setLabels(response.data));
     } catch (error) {
       console.log(error);
