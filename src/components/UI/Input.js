@@ -9,10 +9,12 @@ const Input = ({
   type,
   value,
   onChange,
+  onFocus,
   onBlur,
-  hasError = true,
+  hasError =true,
   errorMessage,
   placeholder,
+  inputRef,
 }) => {
   return (
     <div className={classes.form__group}>
@@ -20,12 +22,15 @@ const Input = ({
         {label}
       </label>
       <input
+        id={id}
         type={type}
         value={value}
         className={classes.form__input}
         onChange={onChange}
         onBlur={onBlur}
+        onFocus={onFocus}
         placeholder={placeholder}
+        ref={inputRef}
       />
       <span className={`${classes.input__error} ${hasError && classes.error}`}>
         {errorMessage}

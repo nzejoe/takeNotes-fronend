@@ -7,6 +7,15 @@ import { Input } from "../UI";
 import { styles } from ".";
 
 const RegisterForm = () => {
+
+  // email validator
+  function validateEmail(email) {
+    const re =
+      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(String(email).toLowerCase());
+  }
+
+
   return (
     <form className={styles.form}>
       <h4 className={styles.form__title}>Register</h4>
@@ -42,7 +51,7 @@ const RegisterForm = () => {
       />
       <div className={styles.form__actions}>
         <button type="submit" className={styles.form__btn}>
-          Log in
+          Register
         </button>
         <small>
           Already have an account?{" "}

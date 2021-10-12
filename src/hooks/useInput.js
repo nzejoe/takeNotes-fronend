@@ -6,23 +6,25 @@ const useInput = (getValidInput)=>{
 
     // check validity of input value
     const isValid = getValidInput(value);
-
+    
+    // this is use for error message flagging
     const hasError = !isValid && isTouched;
 
-    const handleValueChange = (event) => {
+    const onChange = (event) => {
         setValue(event.target.value)
         setIsTouched(true)
     }
 
-    const onValueBlur = () => {
-        setIsTouched(true)
-    }
+    const onBlur = () => {
+      setIsTouched(true);
+    };
 
     return {
         value,
+        isValid,
         hasError,
-        handleValueChange,
-        onValueBlur,
+        onChange,
+        onBlur,
     }
 
 }
