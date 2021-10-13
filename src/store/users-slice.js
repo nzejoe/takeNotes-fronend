@@ -1,98 +1,88 @@
-import { createSlice } from "@reduxjs/toolkit";
-const data = [{
-  "id": 1,
-  "first_name": "Jonathan",
-  "last_name": "Nzete",
-  "email": "nzejoe@company.com",
-  "gender": "Genderqueer",
-  "password": "godknows2",
-  "avatar": "https://robohash.org/cumqueremrepudiandae.png?size=100x100&set=set1"
-}, {
-  "id": 2,
-  "first_name": "Maya",
-  "last_name": "Jonathan",
-  "email": "maya@company.com",
-  "gender": "Genderfluid",
-  "password": "godknows2",
-  "avatar": "https://robohash.org/dignissimosaperiamvoluptate.png?size=100x100&set=set1"
-}, {
-  "id": 3,
-  "first_name": "Maxine",
-  "last_name": "Jonathan",
-  "email": "maxine@company.com",
-  "gender": "Bigender",
-  "password": "godknows2",
-  "avatar": "https://robohash.org/adipiscierrorvoluptatem.png?size=100x100&set=set1"
-}, {
-  "id": 4,
-  "first_name": "Arnuad",
-  "last_name": "Tute",
-  "email": "error: Function 'lover' not found",
-  "gender": "Genderfluid",
-  "password": "indonesian",
-  "avatar": "https://robohash.org/anisidolorem.png?size=100x100&set=set1"
-}, {
-  "id": 5,
-  "first_name": "Sidonnie",
-  "last_name": "Perulli",
-  "email": "error: Function 'lover' not found",
-  "gender": "Genderfluid",
-  "password": "apache",
-  "avatar": "https://robohash.org/cumaspernaturenim.png?size=100x100&set=set1"
-}, {
-  "id": 6,
-  "first_name": "Kissiah",
-  "last_name": "Verryan",
-  "email": "error: Function 'lover' not found",
-  "gender": "Female",
-  "password": "delaware",
-  "avatar": "https://robohash.org/providentmaioresnulla.png?size=100x100&set=set1"
-}, {
-  "id": 7,
-  "first_name": "Mariska",
-  "last_name": "Oldham",
-  "email": "error: Function 'lover' not found",
-  "gender": "Bigender",
-  "password": "peruvian",
-  "avatar": "https://robohash.org/nonmolestiasadipisci.png?size=100x100&set=set1"
-}, {
-  "id": 8,
-  "first_name": "Helene",
-  "last_name": "Greyes",
-  "email": "error: Function 'lover' not found",
-  "gender": "Genderqueer",
-  "password": "american indian and alaska native (aian)",
-  "avatar": "https://robohash.org/voluptaseligendiea.png?size=100x100&set=set1"
-}, {
-  "id": 9,
-  "first_name": "Angeli",
-  "last_name": "Thoday",
-  "email": "error: Function 'lover' not found",
-  "gender": "Non-binary",
-  "password": "fijian",
-  "avatar": "https://robohash.org/doloremquevelalias.png?size=100x100&set=set1"
-}, {
-  "id": 10,
-  "first_name": "Claiborne",
-  "last_name": "Heales",
-  "email": "error: Function 'lover' not found",
-  "gender": "Bigender",
-  "password": "malaysian",
-  "avatar": "https://robohash.org/facilisanimiet.png?size=100x100&set=set1"
-}]
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import axios from "axios";
+import { getAuthUser } from "../helpers";
 
+// csrf token generator
+import Cookie from "js-cookie";
+
+// login thunk
+export const userLogin = createAsyncThunk(
+  "users/login",
+  async (payload, { rejectWithValue, getState }) => {
+    // get token from state
+    const { csrf_token } = getState().users;
+    try {
+      const response = await axios({
+        url: "/accounts/login/",
+        method: "POST",
+        headers: {
+          "Content-type": "application/json",
+          "x-csrftoken": csrf_token,
+        },
+        data: payload,
+      });
+      return response.data;
+    } catch (err) {
+      const error = err;
+      if (!error) {
+        throw err;
+      }
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
 
 const userSlice = createSlice({
-    name: "users",
-    initialState: {
-        users: data,
-        isAuthenticated: false,
-        authenticatedUser:{}
+  name: "users",
+  initialState: {
+    users: [],
+    isAuthenticated: Boolean(getAuthUser),
+    authUser: null,
+    error: null,
+    csrf_token: Cookie.get("csrftoken"),
+  },
+  reducers: {
+    setAuthUser(state, action) {
+      state.authUser = action.payload;
     },
-    reducers:{
-        
-    }
-})
+    requestLogout(state, action) {
+      const token = `token ${action.payload}`;
+
+      axios({
+        url: "/accounts/logout/",
+        method: "POST",
+        headers: {
+          Authorization: token,
+        },
+      })
+      .then(res => {})
+      .catch(err => console.log(err));
+
+      state.isAuthenticated = false;
+      state.authUser = null;
+      localStorage.removeItem("user");
+    },
+  },
+  extraReducers: {
+    [userLogin.fulfilled]: (state, action) => {
+      // save logged in user to localstorage
+      localStorage.setItem("user", JSON.stringify(action.payload));
+      // reset error
+      state.error = null;
+      state.isAuthenticated = true;
+    },
+
+    [userLogin.rejected]: (state, action) => {
+      if (action.payload) {
+        // set error
+        state.error = action.payload;
+        state.isAuthenticated = false;
+        state.authUser = null;
+        localStorage.removeItem("user");
+      }
+    },
+  },
+});
 
 export const userReducer = userSlice.reducer;
 

@@ -1,0 +1,17 @@
+.content {
+  display: grid;
+  grid-template-columns: 1fr 9fr;
+  margin-top: 5rem;
+}
+
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 4rem;
+  padding: 1rem;
+  padding-right: 2rem;
+  display: flex;
+  justify-content: space-between;
+}

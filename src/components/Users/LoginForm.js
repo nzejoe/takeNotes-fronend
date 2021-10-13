@@ -1,5 +1,7 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Link, useHistory } from "react-router-dom";
+import { useDispatch, useSelector } from 'react-redux'
+import { userLogin } from "../../store/users-slice";
 
 // hooks
 import { useInput } from "../../hooks";
@@ -12,16 +14,33 @@ import { styles } from ".";
 
 const LoginForm = () => {
   const [formHasError, setFormHasError] = useState(false);
+  const { error } = useSelector((state) => state.users)
+
+  const dispatch = useDispatch();
+  const history = useHistory();
+
+  // login request function
+  const sendLoginRequest = async (userData) => {
+    const res = await dispatch(userLogin(userData));
+    // check if request response is the same as userLogin.fulfilled, i.e request accepted.
+    if (userLogin.fulfilled.match(res)) {
+      // redirect to home page
+      history.push("/");
+    }
+    // if not logged in
+    if (userLogin.rejected.match(res)) {
+      setFormHasError(true);
+    }
+  };
 
   // input validator functions
   const validate = (value) => {
-   return value.length !== 0;
+    return value.length !== 0;
   };
 
   // email input
   const {
     value: email,
-    isValid: emailIsValid,
     hasError: emailHasError,
     onChange: onEmalilChange,
     onBlur: emailBlur,
@@ -31,35 +50,33 @@ const LoginForm = () => {
   // password input
   const {
     value: password,
-    isValid: passwordIsValid,
-    hasError:passwordHasError,
+    hasError: passwordHasError,
     onChange: onPasswordChange,
     onFocus: onPasswordFocus,
     onBlur: passwordBlur,
   } = useInput(validate);
-  
-  const formIsValid = emailIsValid && passwordIsValid;
-  
+
   const handleSubmit = (event) => {
     event.preventDefault();
-    setFormHasError(!formIsValid);
-
-    if (formIsValid) {
-      const data = {
-        email: email,
-        password: password,
-      };
-      console.log(data)
-    }
+    const data = {
+      username: email.toLowerCase(),
+      password: password,
+    };
+    // send request
+    sendLoginRequest(data);
   };
 
+  // reset form error message if user input
+  useEffect(() => {
+    setFormHasError(false);
+  }, [email, password]);
 
   return (
     <form className={`${styles.form}`} onSubmit={handleSubmit}>
       <div className={styles.form__info}>
         <h4 className={styles.form__title}>Log In</h4>
         <p className={`${styles.form__error} ${formHasError && styles.error}`}>
-          Form error! Not submitted
+          {error && error.message}
         </p>
       </div>
       <Input

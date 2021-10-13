@@ -6,7 +6,7 @@ import Cookies from "js-cookie";
 
 export const fetchNotes = createAsyncThunk(
   "note/fetchNotes",
-  async (dispatch, getState) => {
+  async (paylod, {getState}) => {
     return await axios({
       url: "/notes/",
       method: "GET",

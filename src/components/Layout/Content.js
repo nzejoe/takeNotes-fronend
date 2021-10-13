@@ -5,15 +5,15 @@ import { LabelList } from "../Labels";
 import { AddNote } from "../Notes";
 
 // styles
-import classes from "./Content.module.css";
+import styles from "./Layout.module.css";
 
 const Content = () => {
   return (
-    <div className={classes.content}>
-      <aside className={classes.aside}>
+    <div className={styles.content}>
+      <aside className={styles.aside}>
         <LabelList />
       </aside>
-      <main className={classes.main}>
+      <main className={styles.main}>
         <AddNote />
         <NoteList />
       </main>

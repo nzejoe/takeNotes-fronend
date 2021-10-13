@@ -6,7 +6,7 @@ import { userReducer } from "./users-slice";
 
 
 const store = configureStore({
-    reducer:{note: noteSlice.reducer,label: labelReducer, user: userReducer}
+    reducer:{note: noteSlice.reducer,label: labelReducer, users: userReducer}
 });
 
 export default store;
