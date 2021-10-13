@@ -1,4 +1,5 @@
 import Header from "./Header";
-import styles from "./Layout.module.css";
+import Main from "./Main";
+import Content from "./Content";
 
-export { Header, styles };
+export { Header, Content, Main, };

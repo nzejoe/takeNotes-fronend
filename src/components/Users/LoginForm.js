@@ -25,7 +25,7 @@ const LoginForm = () => {
     // check if request response is the same as userLogin.fulfilled, i.e request accepted.
     if (userLogin.fulfilled.match(res)) {
       // redirect to home page
-      history.push("/");
+      history.replace("/");
     }
     // if not logged in
     if (userLogin.rejected.match(res)) {

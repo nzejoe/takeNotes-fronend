@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 // hooks
 import { useInput } from "../../hooks";
@@ -10,6 +11,8 @@ import { Input } from "../UI";
 import { styles } from ".";
 
 const RegisterForm = () => {
+  const [formHasError, setFormHasError] = useState(false);
+  const { error } = useSelector(state => state.users)
   // username
   const validateUsername = (username) => {
     return username.length > 2;
@@ -118,6 +121,9 @@ const RegisterForm = () => {
   return (
     <form className={styles.form} onSubmit={handleSubmit}>
       <h4 className={styles.form__title}>Register</h4>
+      <p className={`${styles.form__error} ${formHasError && styles.error}`}>
+        {error && error.message}
+      </p>
       <Input
         value={username}
         type="text"

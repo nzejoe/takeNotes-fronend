@@ -11,7 +11,7 @@ export const fetchNotes = createAsyncThunk(
       url: "/notes/",
       method: "GET",
       headers: {
-        authorization: `token 18424a6f4cc2e568c134d128bc0b897b29fcea5e`,
+        authorization: `token ${paylod}`,
       },
     }).then((res) => res.data);
   }

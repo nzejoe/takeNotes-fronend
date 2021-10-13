@@ -36,7 +36,7 @@ const userSlice = createSlice({
   name: "users",
   initialState: {
     users: [],
-    isAuthenticated: Boolean(getAuthUser),
+    isAuthenticated: Boolean(getAuthUser()),
     authUser: null,
     error: null,
     csrf_token: Cookie.get("csrftoken"),

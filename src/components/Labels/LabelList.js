@@ -11,8 +11,10 @@ import classes from './LabelList.module.css'
 
 const LabelList = () => {
   const labels = useSelector((state) => state.label.labels);
+  const { authUser } = useSelector(state => state.users)
   const dispatch = useDispatch();
   
+  const token = authUser && authUser.token
 
   const fetchLabels = useCallback(async () => {
     try {
@@ -20,18 +22,21 @@ const LabelList = () => {
         url: "/labels/",
         method: "GET",
         headers: {
-          authorization: `token 18424a6f4cc2e568c134d128bc0b897b29fcea5e`,
+          authorization: `token ${token}`,
         },
       });
       dispatch(labelActions.setLabels(response.data));
     } catch (error) {
       console.log(error);
     }
-  }, [dispatch]);
+  }, [dispatch, token]);
 
   useEffect(() => {
-    fetchLabels();
-  }, [fetchLabels]);
+    // only fetch label if token is acquired to avoid error flag
+    if(token){
+      fetchLabels();
+    }
+  }, [fetchLabels, token]);
 
   return (
     <div>

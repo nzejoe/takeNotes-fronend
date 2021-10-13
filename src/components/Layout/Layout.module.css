@@ -1,4 +1,4 @@
-.content {
+.main{
   display: grid;
   grid-template-columns: 1fr 9fr;
   margin-top: 5rem;
