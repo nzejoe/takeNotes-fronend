@@ -5,7 +5,7 @@ import { getAuthUser } from "../helpers";
 // csrf token generator
 import Cookie from "js-cookie";
 
-// login thunk
+//*********************** login thunk ***************************/
 export const userLogin = createAsyncThunk(
   "users/login",
   async (payload, { rejectWithValue, getState }) => {
@@ -16,6 +16,7 @@ export const userLogin = createAsyncThunk(
         url: "/accounts/login/",
         method: "POST",
         headers: {
+          accept: "application/json",
           "Content-type": "application/json",
           "x-csrftoken": csrf_token,
         },
@@ -30,12 +31,41 @@ export const userLogin = createAsyncThunk(
       return rejectWithValue(error.response.data);
     }
   }
-);
+);//*********************** end of login thunk ***************************/
+
+//*********************** user regiser thunk ***************************/
+export const userRegister = createAsyncThunk(
+  "users/register",
+  async (payload, { rejectWithValue, getState }) => {
+    const { csrf_token } = getState().users;
+    // console.log(csrf_token)
+    try {
+      const response = await axios({
+        url: "/accounts/register/",
+        method: "POST",
+        headers: {
+          accept: "application/json",
+          "Content-Type": "application/json",
+          "x-CSRFToken": csrf_token,
+        },
+        data: payload,
+      });
+      return response.data;
+    } catch (err) {
+      const error = err;
+      if (!err) {
+        throw err;
+      }
+      return rejectWithValue(error.response.data);
+    }
+  }
+);//*********************** end of user regiser thunk ***************************/
 
 const userSlice = createSlice({
   name: "users",
   initialState: {
-    users: [],
+    currentRequestId: null
+,    users: [],
     isAuthenticated: Boolean(getAuthUser()),
     authUser: null,
     error: null,
@@ -55,8 +85,8 @@ const userSlice = createSlice({
           Authorization: token,
         },
       })
-      .then(res => {})
-      .catch(err => console.log(err));
+        .then((res) => {})
+        .catch((err) => console.log(err));
 
       state.isAuthenticated = false;
       state.authUser = null;
@@ -64,23 +94,48 @@ const userSlice = createSlice({
     },
   },
   extraReducers: {
-    [userLogin.fulfilled]: (state, action) => {
-      // save logged in user to localstorage
-      localStorage.setItem("user", JSON.stringify(action.payload));
-      // reset error
-      state.error = null;
+
+    //******************** login *********************/
+    [userLogin.pending]:(state, action)=>{
+      const { meta:{requestId} } = action // get the requestId
+      state.currentRequestId = requestId;
+    },
+    
+    [userLogin.fulfilled]:(state, action) => {
+      localStorage.setItem("user", JSON.stringify(action.payload)); // save logged in user to localstorage
+      state.error = null; // reset error
       state.isAuthenticated = true;
+      state.currentRequestId = null; // reset currentRequestId
     },
 
     [userLogin.rejected]: (state, action) => {
-      if (action.payload) {
-        // set error
-        state.error = action.payload;
+      const { meta:{requestId} } = action // get the requestId
+      if (state.currentRequestId === requestId) {
+        state.error = action.payload; // set error
         state.isAuthenticated = false;
         state.authUser = null;
         localStorage.removeItem("user");
       }
+    }, //******************** end of login *********************/
+
+    //******************** register *********************/
+    [userRegister.pending] :(state, action) => {
+      const { meta:{requestId} } = action // get the requestId
+
+      state.currentRequestId = requestId;
     },
+    [userRegister.fulfilled] :(state, action) => {
+       state.error = null;
+      state.currentRequestId = null; // reset currentRequestId
+    },
+    [userRegister.rejected] :(state, action) => {
+      const { meta: { requestId } } = action;
+      if (state.currentRequestId === requestId){
+        state.error = action.payload;
+        console.log(action.payload);
+      }
+    }, //******************** end of register *********************/
+    
   },
 });
 

@@ -1,6 +1,7 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
+import React from "react";
+import { Link, useHistory } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { userRegister } from "../../store/users-slice";
 
 // hooks
 import { useInput } from "../../hooks";
@@ -11,8 +12,23 @@ import { Input } from "../UI";
 import { styles } from ".";
 
 const RegisterForm = () => {
-  const [formHasError, setFormHasError] = useState(false);
   const { error } = useSelector(state => state.users)
+
+  const dispatch = useDispatch();
+  const history = useHistory()
+
+  // error message
+  let msg = ''
+  if(error){
+    if(error.username && error.email){
+      msg = 'User with that username and email already exists!'
+    }else if(error.username){
+      msg = error.username[0]
+    }else if(error.email){
+      msg = error.email[0]
+    }
+  }
+
   // username
   const validateUsername = (username) => {
     return username.length > 2;
@@ -101,28 +117,35 @@ const RegisterForm = () => {
     passwordIsValid &&
     password2IsValid;
 
+  // this function sends request to server
+  const sendRegisterRequest = async(userData) => {
+    const result = await dispatch(userRegister(userData));
+    if(userRegister.fulfilled.match(result)){
+      history.replace('/account/login/')
+    }
+  }
+
   // form submission handler
   const handleSubmit = (event) => {
     event.preventDefault();
 
     const data = {
       username,
-      email,
+      email :email.toLowerCase(),
       first_name: firstname,
       last_name: lastname,
       password,
       password2
     }
-    if(formIsValid){
-      console.log(data)
-    }
+    
+    sendRegisterRequest(data)
   }
 
   return (
     <form className={styles.form} onSubmit={handleSubmit}>
       <h4 className={styles.form__title}>Register</h4>
-      <p className={`${styles.form__error} ${formHasError && styles.error}`}>
-        {error && error.message}
+      <p className={`${styles.form__error} ${error && styles.error}`}>
+        {error && msg}
       </p>
       <Input
         value={username}
