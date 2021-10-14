@@ -1,18 +1,22 @@
 import React, { useRef, useState } from 'react';
+import { useHistory } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { noteActions } from '../../store/note-slice';
+import { addNewNote } from '../../store/note-slice';
 
 const AddNote = () => {
-    const labels = useSelector(state => state.label.labels)
+    const { authUser } = useSelector(state => state.users);
+    const labels = useSelector(state => state.label.labels);
     const [selectLabel, setSelectedLabel] = useState('');
     const titleRef = useRef();
     const textRef = useRef();
 
-
+    const history = useHistory();
     const dispatch = useDispatch();
 
-    const handleSubmit = (event) => {
+    const token = authUser && authUser.token
+
+    const handleSubmit = async(event) => {
         event.preventDefault();
         setSelectedLabel('')
         const newNote = {
@@ -21,13 +25,14 @@ const AddNote = () => {
             label: selectLabel,
         }
 
-        dispatch(noteActions.addNote(newNote));
+        dispatch(addNewNote({newNote, token}));
         titleRef.current.value = '';
-        textRef.current.value = ''
+        textRef.current.value = '';
+        history.push('/home');
     };
 
     const labelChangeHandler = (event) => {
-      setSelectedLabel(event.target.value)
+      setSelectedLabel(event.target.value);
     };
 
     return (

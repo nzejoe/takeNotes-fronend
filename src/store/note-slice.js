@@ -4,9 +4,10 @@ import axios from "axios";
 // js-cookie for generating csrf token
 import Cookies from "js-cookie";
 
+//*********** fetch notes ****************/
 export const fetchNotes = createAsyncThunk(
   "note/fetchNotes",
-  async (paylod, {getState}) => {
+  async (paylod, { getState }) => {
     return await axios({
       url: "/notes/",
       method: "GET",
@@ -15,14 +16,44 @@ export const fetchNotes = createAsyncThunk(
       },
     }).then((res) => res.data);
   }
-);
+); //*********** end of fetch notes ****************/
+
+//*********** add notes ****************/
+export const addNewNote = createAsyncThunk(
+  "note/addNote",
+  async (payload, { rejectWithValue, getState }) => {
+    const { newNote, token } = payload;
+    const { csrftoken } = getState().note;
+
+    try {
+      const response = await axios({
+        url: "/notes/",
+        method: "POST",
+        headers: {
+          "Content-type": "application/json",
+          "x-csrftoken": csrftoken,
+          authorization: `token ${token}`,
+        },
+        data: newNote,
+      });
+      return response.data;
+    } catch (err) {
+      const error = err;
+      if (!error.response) {
+        throw err;
+      }
+      return rejectWithValue(error.response.data);
+    }
+  }
+); //*********** end of add notes ****************/
 
 const noteSlice = createSlice({
   name: "note",
   initialState: {
+    curentRequestId: null,
     allNotes: [],
     filteredNotes: [],
-    refresh: false,
+    refresh: 0,
     csrf_token: Cookies.get("csrftoken"),
   },
   reducers: {
@@ -53,7 +84,8 @@ const noteSlice = createSlice({
         .catch((err) => console.log(err));
 
       // refresh the note list
-      return { ...state, refresh: !state.refresh };
+      state.refresh++;
+      return state;
     },
 
     updateNote(state, action) {
@@ -73,35 +105,52 @@ const noteSlice = createSlice({
         .catch((err) => console.log(err));
 
       // refresh the note list
-      return { ...state, refresh: !state.refresh };
-    },
-
-    addNote(state, action) {
-      const note = action.payload;
-
-      // send request
-      axios({
-        method: "POST",
-        url: "/notes/",
-        headers: {
-          "Content-type": "application/json",
-          "X-CSRFToken": state.csrf_token,
-        },
-        data: note,
-      })
-        .then((res) => res.data)
-        .catch((err) => console.log(err));
-
-      // refresh the note list
-      return { ...state, refresh: !state.refresh };
+      state.refresh++;
+      return state;
     },
   },
 
   extraReducers: {
-    [fetchNotes.fulfilled]: (state, action) => {
-      state.allNotes = action.payload;
-      state.filteredNotes = state.allNotes;
+    // fetch notes begins
+    [fetchNotes.pending]: (state, action) => {
+      const { requestId } = action.meta; // get request id
+      state.curentRequestId = requestId;
     },
+    [fetchNotes.fulfilled]: (state, action) => {
+      const { requestId } = action.meta; // get request id
+      if (state.curentRequestId === requestId) {
+        state.allNotes = action.payload;
+        state.filteredNotes = state.allNotes;
+        state.curentRequestId = null;
+      }
+    },
+    [fetchNotes.rejected]: (state, action) => {
+      const { requestId } = action.meta; // get request id
+      if (state.curentRequestId === requestId) {
+        console.log(action.payload);
+        state.curentRequestId = null;
+      }
+    }, // end of fetch notes
+
+    // add note begins
+    [addNewNote.pending]: (state, action) => {
+      const { requestId } = action.meta; // get request id
+      state.curentRequestId = requestId;
+    },
+    [addNewNote.fulfilled]: (state, action) => {
+      const { requestId } = action.meta; // get request id
+      if (state.curentRequestId === requestId) {
+        state.refresh++;
+        state.curentRequestId = null;
+      }
+    },
+    [addNewNote.rejected]: (state, action) => {
+      const { requestId } = action.meta; // get request id
+      if (state.curentRequestId === requestId) {
+        console.log(action.payload);
+        state.curentRequestId = null;
+      }
+    }, // end of add note
   },
 });
 

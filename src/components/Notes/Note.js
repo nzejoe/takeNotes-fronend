@@ -67,7 +67,7 @@ const Note = ({ id, title, text, created, label: labelID }) => {
     setEdit(false);
 
     // redirect to home page
-    history.push('/');
+    history.push('/home');
   };
 
   // edit form

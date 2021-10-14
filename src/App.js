@@ -14,11 +14,12 @@ import Home from "./Routes/Home";
 import LabelRoute from "./Routes/LabelRoute";
 import LoginPage from "./Routes/LoginPage";
 import RegisterPage from "./Routes/RegisterPage";
+import PrivateRoute from "./Routes/PrivateRoute";
+import PublicRoute from "./Routes/PublicRoute";
 
 import userActions from "./store/users-slice";
 import { getAuthUser } from "./helpers";
-import PrivateRoute from "./Routes/PrivateRoute";
-import PublicRoute from './Routes/PublicRoute'
+import { fetchNotes } from "./store/note-slice";
 
 import "./App.css";
 
@@ -26,10 +27,11 @@ import "./App.css";
 axios.defaults.baseURL = "http://localhost:8000/";
 
 function App() {
-  const { isAuthenticated } = useSelector((state) => state.users);
+  const { isAuthenticated, authUser } = useSelector((state) => state.users);
+  const { refresh } = useSelector((state) => state.note);
 
   const dispatch = useDispatch();
-
+  const token = authUser && authUser.token;
 
   // set Athenticated user when authenticated
   useEffect(() => {
@@ -38,6 +40,13 @@ function App() {
       dispatch(userActions.setAuthUser(user));
     }
   }, [dispatch, isAuthenticated]);
+
+  // refresh not list by fetching new data from server
+  useEffect(() => {
+    if (token) {
+      dispatch(fetchNotes(token));
+    }
+  }, [dispatch, refresh, token]);
 
   return (
     <Router>
