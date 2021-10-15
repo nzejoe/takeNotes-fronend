@@ -2,13 +2,14 @@ import React, { useState, useRef, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 
-import { noteActions } from "../../store/note-slice";
+import { updateNote, deleteNote, refreshList } from "../../store/note-slice";
 import { DateDashboard } from "../UI";
 
 // style
 import classes from './Note.module.css'
 
 const Note = ({ id, title, text, created, label: labelID }) => {
+  const { authUser } = useSelector(state => state.users)
   const [edit, setEdit] = useState(false);
   const labels = useSelector((state) => state.label.labels);
   const formRef = useRef();
@@ -18,7 +19,7 @@ const Note = ({ id, title, text, created, label: labelID }) => {
   const [enteredText, setEnteredText] = useState(text);
   const [labelValue, setLabelValue] = useState(labelID);
 
-
+  const token = authUser && authUser.token
   //dispatch
   const dispatch = useDispatch();
 
@@ -34,8 +35,17 @@ const Note = ({ id, title, text, created, label: labelID }) => {
   }
 
   // delete action
-  const handleDelete = () => {
-    dispatch(noteActions.deleteNote(id));
+  const handleDelete = async () => {
+    if (token) {
+      const resultAction = await dispatch(deleteNote({ id, token })
+      );
+      if (deleteNote.fulfilled.match(resultAction)) {
+        // redirect to home page
+        setEdit(false);
+        dispatch(refreshList()); // refresh
+        history.push("/home");
+      }
+  }
   };
 
   // close edit form when focus is lost
@@ -56,18 +66,23 @@ const Note = ({ id, title, text, created, label: labelID }) => {
   }); // end of focus lost
 
   // edit submit handler
-  const handleSubmit = (event) => {
+  const handleSubmit = async(event) => {
     event.preventDefault();
     const noteUpdate = {
       title: enteredTitle,
       text: enteredText,
       label: labelValue,
     };
-    dispatch(noteActions.updateNote({id, noteUpdate}))
-    setEdit(false);
 
-    // redirect to home page
-    history.push('/home');
+    if(token){
+      const resultAction = await dispatch(updateNote({ id, noteUpdate,token }));
+      if(updateNote.fulfilled.match(resultAction)){
+        // redirect to home page
+        setEdit(false);
+        dispatch(refreshList()) // refresh
+        history.push('/home');
+      }
+    }
   };
 
   // edit form

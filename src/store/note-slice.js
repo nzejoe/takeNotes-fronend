@@ -47,7 +47,61 @@ export const addNewNote = createAsyncThunk(
   }
 ); //*********** end of add notes ****************/
 
-const noteSlice = createSlice({
+//*********** update note ****************/
+export const updateNote = createAsyncThunk(
+  "note/updateNote",
+  async (payload, { rejectWithValue, getState }) => {
+    const { csrf_token } = getState().note;
+    const { id, noteUpdate, token } = payload;
+    try {
+      const response = await axios({
+        url: `notes/${id}/`,
+        method: "PUT",
+        headers: {
+          "Content-type": "application/json",
+          "x-csrftoken": csrf_token,
+          authorization: `token ${token}`,
+        },
+        data: noteUpdate,
+      });
+      return response.data;
+    } catch (err) {
+      const error = err;
+      if (!error.response) {
+        throw err;
+      }
+      return rejectWithValue(error.response.data);
+    }
+  }
+); //*********** end of update note ****************/
+
+//*********** delete note ****************/
+export const deleteNote = createAsyncThunk(
+  "note/deleteNote",
+  async (payload, { rejectWithValue, getState }) => {
+    const { csrf_token } = getState().note;
+    const { id, token } = payload;
+    try {
+      const response = await axios({
+        url: `notes/${id}/`,
+        method: "DELETE",
+        headers: {
+          "x-csrftoken": csrf_token,
+          authorization: `token ${token}`,
+        },
+      });
+      return response.data;
+    } catch (err) {
+      const error = err;
+      if (!error.response) {
+        throw err;
+      }
+      return rejectWithValue(error.response.data);
+    }
+  }
+); //*********** end of delete note ****************/
+
+const {actions, reducer} = createSlice({
   name: "note",
   initialState: {
     curentRequestId: null,
@@ -68,21 +122,7 @@ const noteSlice = createSlice({
       return state;
     },
 
-    deleteNote(state, action) {
-      const id = action.payload;
-
-      // send request
-      axios({
-        method: "DELETE",
-        url: `notes/${id}/`,
-        headers: {
-          "Content-type": "application/json",
-          "X-CSRFToken": state.csrf_token,
-        },
-      })
-        .then((res) => res.data)
-        .catch((err) => console.log(err));
-
+    refreshList(state, action) {
       // refresh the note list
       state.refresh++;
       return state;
@@ -109,7 +149,7 @@ const noteSlice = createSlice({
       return state;
     },
   },
-
+  // extra reducers
   extraReducers: {
     // fetch notes begins
     [fetchNotes.pending]: (state, action) => {
@@ -151,9 +191,47 @@ const noteSlice = createSlice({
         state.curentRequestId = null;
       }
     }, // end of add note
+
+    // update note begins
+    [updateNote.pending]: (state, action) => {
+      const { requestId } = action.meta; // get request id
+      state.curentRequestId = requestId;
+    },
+    [updateNote.fulfilled]: (state, action) => {
+      const { requestId } = action.meta; // get request id
+      if (state.curentRequestId === requestId) {
+        state.curentRequestId = null;
+      }
+    },
+    [updateNote.rejected]: (state, action) => {
+      const { requestId } = action.meta; // get request id
+      if (state.curentRequestId === requestId) {
+        console.log(action.payload);
+        state.curentRequestId = null;
+      }
+    }, // end of update note
+
+    // delete note begins
+    [deleteNote.pending]: (state, action) => {
+      const { requestId } = action.meta; // get request id
+      state.curentRequestId = requestId;
+    },
+    [deleteNote.fulfilled]: (state, action) => {
+      const { requestId } = action.meta; // get request id
+      if (state.curentRequestId === requestId) {
+        state.curentRequestId = null;
+      }
+    },
+    [deleteNote.rejected]: (state, action) => {
+      const { requestId } = action.meta; // get request id
+      if (state.curentRequestId === requestId) {
+        console.log(action.payload);
+        state.curentRequestId = null;
+      }
+    }, // end of delete note
   },
 });
 
-export const noteActions = noteSlice.actions;
+export const { refreshList, getAllNotes, filterNotes } = actions;
 
-export default noteSlice;
+export default reducer;

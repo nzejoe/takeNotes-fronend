@@ -3,7 +3,7 @@ import { useParams } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
 
 import Content from '../components/Layout/Content'
-import { noteActions } from '../store/note-slice';
+import { filterNotes } from '../store/note-slice';
 
 const LabelRoute = () => {
     const [labelID, setLabelID] = useState(null)
@@ -20,7 +20,7 @@ const LabelRoute = () => {
          if (foundLabel) {
            setLabelID(foundLabel.id);
          }
-      dispatch(noteActions.filterNotes(labelID));
+      dispatch(filterNotes(labelID));
     }, [dispatch, labelID, foundLabel]);
 
     return (
