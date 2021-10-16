@@ -10,6 +10,7 @@
   left: 0;
   width: 100vw;
   height: 4rem;
+  z-index: 1;
   padding: 1rem;
   padding-right: 2rem;
   display: flex;

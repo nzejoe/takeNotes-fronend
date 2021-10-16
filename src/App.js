@@ -20,6 +20,7 @@ import PublicRoute from "./Routes/PublicRoute";
 import userActions from "./store/users-slice";
 import { getAuthUser } from "./helpers";
 import { fetchNotes } from "./store/note-slice";
+import Modal from "./components/UI/Modal";
 
 import "./App.css";
 
@@ -51,6 +52,9 @@ function App() {
   return (
     <Router>
       <Switch>
+      <PrivateRoute path="/NOTE/:id" exact>
+        <Modal />
+      </PrivateRoute>
         <PublicRoute path="/account/login">
           <LoginPage />
         </PublicRoute>

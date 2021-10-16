@@ -1,10 +1,12 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 
-const labelSlice = createSlice({
+const {actions, reducer} = createSlice({
     name:'label',
     initialState:{
-        labels: [{id:0 ,name: ''}]
+        currentRequestId: null,
+        labels: [{id:0 ,name: ''}],
+        refresh: 0
     },
     reducers: {
         setLabels(state, action){
@@ -13,8 +15,7 @@ const labelSlice = createSlice({
     }
 });
 
-const labelReducer = labelSlice.reducer
 
-export const labelActions = labelSlice.actions
+export const {setLabels} = actions
 
-export default labelReducer;
+export default reducer

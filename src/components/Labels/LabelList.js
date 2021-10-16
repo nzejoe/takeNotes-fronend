@@ -2,7 +2,7 @@ import React, { useEffect, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 
-import { labelActions } from "../../store/label-slice";
+import { setLabels } from "../../store/label-slice";
 import { Label } from ".";
 import { NavLink } from "react-router-dom";
 
@@ -25,7 +25,7 @@ const LabelList = () => {
           authorization: `token ${token}`,
         },
       });
-      dispatch(labelActions.setLabels(response.data));
+      dispatch(setLabels(response.data));
     } catch (error) {
       console.log(error);
     }

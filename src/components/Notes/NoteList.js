@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux'
 import { Note } from '.';
 
 // styles
-import classes from "./NoteList.module.css";
+import classes from "./Note.module.css";
 
 const NoteList = () => {
   const { filteredNotes } = useSelector((state) => state.note);

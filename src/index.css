@@ -1,5 +1,7 @@
 :root{
-  --primary-white: rgb(245, 250, 255)
+  --primary-white: rgb(245, 250, 255);
+  --primary-black: rgb(56, 55, 55);
+  --primary-gray: rgb(170, 166, 166);
 }
 
 *,
