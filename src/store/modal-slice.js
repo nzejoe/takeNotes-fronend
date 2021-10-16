@@ -5,7 +5,8 @@ const {actions, reducer} = createSlice({
     name: 'modal',
     initialState: {
         isOpen: false,
-        update: ''
+        update: '',
+        labelAdd: false,
     },
     reducers: {
         openModal:(state, action)=>{
@@ -15,10 +16,18 @@ const {actions, reducer} = createSlice({
         closeModal:(state, action)=>{
             state.isOpen = false;
             state.update = '';
-        }
+        },
+        openLabel:(state, action)=>{
+            state.labelAdd = true
+            state.isOpen = true
+        },
+        closeLabel:(state, action)=>{
+            state.labelAdd = false
+            state.isOpen = false
+        },
     }
 });
 
-export const { openModal, closeModal } = actions;
+export const { openModal, closeModal, openLabel, closeLabel } = actions;
 
 export default reducer;
