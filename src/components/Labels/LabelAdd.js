@@ -1,7 +1,8 @@
 import React, { useRef, useState, memo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { closeLabelModal } from "../../store/modal-slice";
-import { addLabel, refreshList } from "../../store/label-slice";
+import { addLabel, refreshList, updateLabel, deleteLabel } from "../../store/label-slice";
+
 
 // icons
 import { FaEdit, FaTrash, FaSave, FaTimes } from 'react-icons/fa'
@@ -9,14 +10,24 @@ import { FaEdit, FaTrash, FaSave, FaTimes } from 'react-icons/fa'
 // styles
 import styles from "./Label.module.css";
 
-const Label = ({ label })=>{
+const Label = ({ label, token })=>{
   const [isEditing, setIsEditing] = useState(false);
   const [labelName, setLabelName] = useState(label.name)
 
+  const dispatch = useDispatch()
+
   const handleSubmit = (e)=>{
     e.preventDefault()
-    console.log('submitted')
+    dispatch(updateLabel({label: {name: labelName}, id:label.id ,token}))
+    setIsEditing(false)
   }
+
+  const handleDelete = () => {
+    dispatch(deleteLabel({ id: label.id, token }));
+    setIsEditing(false);
+    console.log('deleted')
+  };
+
   return (
     <React.Fragment>
       {isEditing ? (
@@ -48,6 +59,7 @@ const Label = ({ label })=>{
             <FaTrash
               title="Delete"
               className={`${styles.action__delete} ${styles.action__btn}`}
+              onClick={handleDelete}
             />
           </span>
         </span>
@@ -108,7 +120,7 @@ const LabelAdd = () => {
         </button>
       </form>
       {labels.map((label) => {
-        return <Label key={label.id} label={label}/>
+        return <Label key={label.id} label={label} token={token}/>
       })}
       <hr />
       <button onClick={closeHandler}>close</button>
