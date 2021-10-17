@@ -21,11 +21,6 @@
   transition: all 1s;
 }
 
-.form__remove{
-  opacity: 0;
-  transform: scale(1.5);
-}
-
 .input{
   display: block;
   width: 100%;

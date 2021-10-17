@@ -1,8 +1,7 @@
 import ReactDOM from 'react-dom'
 import React from 'react'
 
-import { useSelector, useDispatch } from 'react-redux'
-import { closeLabel } from '../../store/modal-slice'
+import { useSelector } from 'react-redux'
 
 // modal contents
 import UpdateNote from '../Notes/UpdateNote'
@@ -13,13 +12,13 @@ import styles from './Modal.module.css'
 
 
 export const ModalContent = ({ close, addLabel }) => {
-    const { update, isOpen,labelAdd } = useSelector(state => state.modal);
+    const { note, isOpen, label } = useSelector(state => state.modal);
 
     return (
       <div className={styles.overlay}>
         <div className={`${styles.content} ${!isOpen && styles.remove}`}>
-          {update && <UpdateNote {...update} close={close} />}
-          {labelAdd && <LabelAdd/> }
+          {note && <UpdateNote {...note} close={close} />}
+          {label && <LabelAdd /> }
         </div>
       </div>
     );

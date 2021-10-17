@@ -42,7 +42,7 @@ function App() {
     }
   }, [dispatch, isAuthenticated]);
 
-  // refresh not list by fetching new data from server
+  // refresh note list by fetching new data from server
   useEffect(() => {
     if (token) {
       dispatch(fetchNotes(token));

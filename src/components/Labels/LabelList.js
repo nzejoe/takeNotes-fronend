@@ -1,9 +1,8 @@
-import React, { useEffect, useCallback, useState } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import axios from "axios";
 
-import { setLabels } from "../../store/label-slice";
-import { openLabel } from "../../store/modal-slice";
+import { fetchLabels } from "../../store/label-slice";
+import { openLabelModal } from "../../store/modal-slice";
 import { Label } from ".";
 import { NavLink } from "react-router-dom";
 
@@ -16,38 +15,24 @@ import styles from "./Label.module.css";
 import { FaPlusSquare } from "react-icons/fa";
 
 const LabelList = () => {
-  const labels = useSelector((state) => state.label.labels);
+  const {labels, refresh} = useSelector((state) => state.label);
   const { authUser } = useSelector((state) => state.users);
-  const { labelAdd } = useSelector((state) => state.modal);
+  const { isOpen } = useSelector((state) => state.modal);
   const dispatch = useDispatch();
 
   const token = authUser && authUser.token;
 
-  const fetchLabels = useCallback(async () => {
-    try {
-      const response = await axios({
-        url: "/labels/",
-        method: "GET",
-        headers: {
-          authorization: `token ${token}`,
-        },
-      });
-      dispatch(setLabels(response.data));
-    } catch (error) {
-      console.log(error);
-    }
-  }, [dispatch, token]);
-
   useEffect(() => {
     // only fetch label if token is acquired to avoid error flag
     if (token) {
-      fetchLabels();
+      dispatch(fetchLabels(token));
     }
-  }, [fetchLabels, token]);
+  }, [dispatch, token, refresh]);
 
+  // add handler
   const addHandler = () => {
-    dispatch(openLabel());
-  };
+    dispatch(openLabelModal())
+  };  
 
   return (
     <div className={styles.wrapper}>
@@ -66,7 +51,7 @@ const LabelList = () => {
         title="Add label"
         onClick={addHandler}
       />
-      {labelAdd && <Modal />}
+      {isOpen && <Modal />}
     </div>
   );
 };

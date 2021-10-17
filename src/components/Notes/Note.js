@@ -1,8 +1,8 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef } from "react";
 import { useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { openModal, closeModal } from "../../store/modal-slice";
+import { openNoteModal, closeNoteModal } from "../../store/modal-slice";
 
 import { deleteNote, refreshList } from "../../store/note-slice";
 import { DateDashboard } from "../UI";
@@ -49,15 +49,16 @@ const Note = ({ id, title, text, created, label: labelID }) => {
     const timer = setTimeout(() => {
       if (edit) {
         setEdit(false);
+        dispatch(closeNoteModal())
       } else {
         clearTimeout(timer);
       }
     }, 1000);
-  }, [edit]);
+  }, [edit, dispatch]);
 
   const handleEdit = () => {
     setEdit(true);
-    dispatch(openModal({ id, title, text, label: labelID ? labelID : "" }));
+    dispatch(openNoteModal({ id, title, text, label: labelID ? labelID : "" }));
   };
 
   return (

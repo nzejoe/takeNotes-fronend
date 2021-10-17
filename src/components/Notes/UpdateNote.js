@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, memo } from "react";
 import { useHistory } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 // note actions
@@ -51,15 +51,13 @@ const UpdateNote = ({ id, title, text,label: labelID, close }) => {
     }
   };
 
-  console.log(closeModal)
-
   const handleClose = ()=>{
     setCloseModal(true)
     close()
   }
 
   return (
-    <form onSubmit={handleSubmit} className={`${styles.form__update} ${closeModal && styles.form__remove}`}>
+    <form onSubmit={handleSubmit} className={`${styles.form__update} ${closeModal && 'remove'}`}>
       <div className="form-group">
         <label htmlFor="title"></label>
         <input
@@ -107,4 +105,4 @@ const UpdateNote = ({ id, title, text,label: labelID, close }) => {
   );
 };
 
-export default UpdateNote;
+export default memo(UpdateNote);

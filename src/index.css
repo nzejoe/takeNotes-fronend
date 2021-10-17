@@ -35,3 +35,8 @@ code {
   width: 100vw;
   height : 100vh;
 }
+
+.remove{
+  opacity: 0;
+  transform: scale(1.5);
+}

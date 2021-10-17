@@ -35,6 +35,7 @@
   background-color: var(--primary-white);
   padding: 1rem;
   border-radius: 10px;
+  transition: all 1s;
 }
 
 .input {
