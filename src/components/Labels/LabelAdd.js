@@ -5,7 +5,8 @@ import { addLabel, refreshList, updateLabel, deleteLabel } from "../../store/lab
 
 
 // icons
-import { FaEdit, FaTrash, FaSave, FaTimes } from 'react-icons/fa'
+import { FaEdit, FaTrash, FaSave, FaTimes  } from 'react-icons/fa'
+import { BsBookmarkCheck } from "react-icons/bs";
 
 // styles
 import styles from "./Label.module.css";
@@ -107,7 +108,7 @@ const LabelAdd = () => {
   
 
   return (
-    <div className={`${styles.add__label} ${!isOpen && 'remove'}`}>
+    <div className={`${styles.add__label} ${!isOpen && "remove"}`}>
       <form className={`${styles.form__add}`} onSubmit={handleSubmit}>
         <input
           type="text"
@@ -116,11 +117,11 @@ const LabelAdd = () => {
           ref={labelRef}
         />
         <button type="submit" className={styles.btn__submit}>
-          Add
+          <BsBookmarkCheck className={styles.btn__submit_icon} title="Add" />
         </button>
       </form>
       {labels.map((label) => {
-        return <Label key={label.id} label={label} token={token}/>
+        return <Label key={label.id} label={label} token={token} />;
       })}
       <hr />
       <button onClick={closeHandler}>close</button>

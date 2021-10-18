@@ -55,13 +55,21 @@
 }
 
 .btn__submit {
-  padding: 0.2rem 0.4rem;
+  padding: 0.2rem .2rem;
   outline: none;
   border: 1px solid var(--primary-gray);
   border-top-right-radius: 10px;
   border-bottom-right-radius: 10px;
   background-color: var(--primary-white);
   cursor: pointer;
+}
+
+.btn__submit_icon{
+  font-size: 1.5rem;
+  transition: all .2s;
+}
+.btn__submit:hover .btn__submit_icon{
+  transform: scale(1.2);
 }
 
 .label__actions {
