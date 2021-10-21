@@ -1,5 +1,4 @@
 import React, { useState, memo } from "react";
-import { useHistory } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 // note actions
 import { updateNote, refreshList } from "../../store/note-slice";
@@ -7,21 +6,16 @@ import { updateNote, refreshList } from "../../store/note-slice";
 // styles
 import styles from './Note.module.css'
 
-const UpdateNote = ({ id, title, text,label: labelID, close }) => {
-
+const UpdateNote = ({ id, title, text, label: labelID, closeModalHandler }) => {
   const { authUser } = useSelector((state) => state.users);
   const { labels } = useSelector((state) => state.label);
+
   const [enteredTitle, setEnterdTitle] = useState(title);
   const [enteredText, setEnteredText] = useState(text);
   const [labelValue, setLabelValue] = useState(labelID);
 
-  // modal
-  const [closeModal, setCloseModal] = useState(false)
-
   //dispatch
   const dispatch = useDispatch();
-  // history
-  const history = useHistory();
 
   const token = authUser && authUser.token;
 
@@ -38,30 +32,18 @@ const UpdateNote = ({ id, title, text,label: labelID, close }) => {
         updateNote({ id, noteUpdate, token })
       );
       if (updateNote.fulfilled.match(resultAction)) {
-        // redirect to home page
-        
         dispatch(refreshList()); // refresh
-        close();
-        setCloseModal(true);
-
-         setTimeout(() => {// the timeout is for the fade effect on the modal on close and save
-           history.push("/home");
-         }, 1000);
+        closeModalHandler();
       }
     }
   };
 
-  const handleClose = ()=>{
-    setCloseModal(true)
-    close()
-  }
-
   return (
-    <form onSubmit={handleSubmit} className={`${styles.form__update} ${closeModal && 'remove'}`}>
+    <form onSubmit={handleSubmit} className={`${styles.form__update}`}>
       <div className="form-group">
         <label htmlFor="title"></label>
         <input
-        className={styles.input}
+          className={styles.input}
           type="text"
           id="title"
           placeholder="title"
@@ -72,7 +54,7 @@ const UpdateNote = ({ id, title, text,label: labelID, close }) => {
       <div className="form-group">
         <label htmlFor="text"></label>
         <textarea
-        className={styles.input}
+          className={styles.input}
           id="text"
           placeholder="note"
           cols="50"
@@ -84,7 +66,7 @@ const UpdateNote = ({ id, title, text,label: labelID, close }) => {
       <div className="form-group">
         <label htmlFor="label"></label>
         <select
-        className={`${styles.input} ${styles.select}`}
+          className={`${styles.input} ${styles.select}`}
           name="label"
           id="label"
           onChange={(e) => setLabelValue(e.target.value)}
@@ -100,7 +82,7 @@ const UpdateNote = ({ id, title, text,label: labelID, close }) => {
         </select>
       </div>
       <button type="submit">save</button>
-      <button onClick={handleClose}>cancel</button>
+      <button onClick={closeModalHandler}>cancel</button>
     </form>
   );
 };

@@ -13,36 +13,28 @@ const { actions, reducer } = createSlice({
       state.add = true;
       state.isOpen = true;
     },
-    closeAddNoteModal: (state, action) => {
-      state.isOpen = false;
-      state.add = false;
-    },
     openNoteModal: (state, action) => {
       state.note = action.payload;
       state.isOpen = true;
-    },
-    closeNoteModal: (state, action) => {
-      state.isOpen = false;
-      state.note = null;
     },
     openLabelModal: (state, action) => {
       state.label = true;
       state.isOpen = true;
     },
-    closeLabelModal: (state, action) => {
-      state.label = false;
+    closeModal: (state, action) => {
       state.isOpen = false;
+      state.note = null;
+      state.add = false;
+      state.label = false;
     },
   },
 });
 
 export const {
   openNoteModal,
-  closeNoteModal,
-  openLabelModal,
-  closeLabelModal,
   openAddNoteModal,
-  closeAddNoteModal,
+  openLabelModal,
+  closeModal,
 } = actions;
 
 export default reducer;

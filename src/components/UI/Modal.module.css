@@ -6,6 +6,7 @@
     height: 100vh;
     background: rgba(0, 0, 0, 0.295);
     z-index: 1000;
+    transition: all 1s;
 }
 
 .content{

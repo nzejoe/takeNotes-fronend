@@ -1,20 +1,17 @@
-import React, { useState, useRef } from "react";
-import { useCallback } from "react";
+import React, { useRef, memo } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { openNoteModal, closeNoteModal } from "../../store/modal-slice";
+import { openNoteModal } from "../../store/modal-slice";
 
 import { deleteNote, refreshList } from "../../store/note-slice";
 import { DateDashboard } from "../UI";
-import Modal from "../UI/Modal";
 
 // style
 import classes from "./Note.module.css";
 
 const Note = ({ id, title, text, created, label: labelID }) => {
   const { authUser } = useSelector((state) => state.users);
-  const [edit, setEdit] = useState(false);
-  const labels = useSelector((state) => state.label.labels);
+  const { labels } = useSelector((state) => state.label);
   const formRef = useRef();
 
   const token = authUser && authUser.token;
@@ -38,51 +35,34 @@ const Note = ({ id, title, text, created, label: labelID }) => {
       const resultAction = await dispatch(deleteNote({ id, token }));
       if (deleteNote.fulfilled.match(resultAction)) {
         // redirect to home page
-        setEdit(false);
         dispatch(refreshList()); // refresh
         history.push("/home");
       }
     }
   };
 
-  const handleClose = useCallback(() => {
-    const timer = setTimeout(() => {
-      if (edit) {
-        setEdit(false);
-        dispatch(closeNoteModal())
-      } else {
-        clearTimeout(timer);
-      }
-    }, 1000);
-  }, [edit, dispatch]);
-
   const handleEdit = () => {
-    setEdit(true);
     dispatch(openNoteModal({ id, title, text, label: labelID ? labelID : "" }));
   };
 
   return (
     <React.Fragment>
-      <div ref={formRef} className={`${classes.note} ${edit && classes.edit}`}>
-        {edit ? (
-          <Modal close={handleClose} isEditing={edit} />
-        ) : (
-          <div>
-            <DateDashboard date={created} />
-            <h4>{title}</h4>
-            <p>{text}</p>
-            <p>
-              <small>{labelName}</small>
-            </p>
-            <div className="actions">
-              <button onClick={handleEdit}>Edit</button>
-              <button onClick={handleDelete}>Delete</button>
-            </div>
+      <div ref={formRef} className={`${classes.note}`}>
+        <div>
+          <DateDashboard date={created} />
+          <h4>{title}</h4>
+          <p>{text}</p>
+          <p>
+            <small>{labelName}</small>
+          </p>
+          <div className="actions">
+            <button onClick={handleEdit}>Edit</button>
+            <button onClick={handleDelete}>Delete</button>
           </div>
-        )}
+        </div>
       </div>
     </React.Fragment>
   );
 };
 
-export default Note;
+export default memo(Note);

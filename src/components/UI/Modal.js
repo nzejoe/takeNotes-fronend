@@ -1,37 +1,54 @@
-import ReactDOM from 'react-dom'
-import React from 'react'
+import ReactDOM from "react-dom";
+import React, { memo, useState } from "react";
 
-import { useSelector } from 'react-redux'
+import { useHistory } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 
 // modal contents
-import { AddNote } from '../Notes'
-import UpdateNote from '../Notes/UpdateNote'
-import { LabelAdd } from '../Labels'
+import { AddNote } from "../Notes";
+import UpdateNote from "../Notes/UpdateNote";
+import { LabelAdd } from "../Labels";
+import { closeModal } from "../../store/modal-slice";
 
-import styles from './Modal.module.css'
+import styles from "./Modal.module.css";
 
+export const ModalContent = () => {
+  const { note, label, add } = useSelector((state) => state.modal);
+  const [openModal, setOpenModal] = useState(true);
 
+  const dispatch = useDispatch();
+  const history = useHistory();
 
-export const ModalContent = ({ close, addLabel }) => {
-    const { note, isOpen, label, add } = useSelector(state => state.modal);
+  const closeModalHandler = () => {
+    setOpenModal(false);
+    setTimeout(() => {
+      history.push("/home");
+      dispatch(closeModal());
+    }, 1000);
+  };
 
-    return (
-      <div className={styles.overlay}>
-        <div className={`${styles.content} ${!isOpen && styles.remove}`}>
-          {note && <UpdateNote {...note} close={close} />}
-          {label && <LabelAdd /> }
-          {add && <AddNote /> }
-        </div>
+  return (
+    <div className={`${styles.overlay} ${!openModal && "remove"}`}>
+      <div className={`${styles.content}`}>
+        {note && <UpdateNote {...note} closeModalHandler={closeModalHandler} />}
+        {label && <LabelAdd closeModalHandler={closeModalHandler} />}
+        {add && <AddNote closeModalHandler={closeModalHandler} />}
       </div>
-    );
-}
-
-
-const Modal = ({ close, addLabel }) => {
-  return ReactDOM.createPortal(
-    <ModalContent close={close} addLabel={addLabel}/>,
-    document.getElementById("modal")
+    </div>
   );
 };
 
-export default Modal;
+const Modal = () => {
+  const { isOpen } = useSelector((state) => state.modal);
+  return (
+    <React.Fragment>
+      {isOpen &&
+        ReactDOM.createPortal(
+          <ModalContent />,
+          document.getElementById("modal")
+        )}
+    </React.Fragment>
+  );
+};
+
+export default memo(Modal);
