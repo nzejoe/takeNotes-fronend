@@ -9,7 +9,7 @@ import { NavLink } from "react-router-dom";
 // style
 import styles from "./Label.module.css";
 // icons
-import { FaPlusSquare } from "react-icons/fa";
+import { VscAdd } from "react-icons/vsc";
 
 const LabelList = () => {
   const {labels, refresh} = useSelector((state) => state.label);
@@ -40,13 +40,15 @@ const LabelList = () => {
         Notes
       </NavLink>
       {labels.map((label) => {
-        return <Label key={label.id} {...label} classes={styles} />;
+        return <Label key={label.id} {...label} />;
       })}
-      <FaPlusSquare
-        className={styles.add__icon}
-        title="Add label"
-        onClick={addHandler}
-      />
+      <button className={styles.label__add_btn}>
+        <VscAdd
+          className={styles.label__add_icon}
+          title="Add label"
+          onClick={addHandler}
+        />
+      </button>
     </div>
   );
 };

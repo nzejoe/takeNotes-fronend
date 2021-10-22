@@ -2,6 +2,11 @@
   --primary-white: rgb(245, 250, 255);
   --primary-black: rgb(56, 55, 55);
   --primary-gray: rgb(170, 166, 166);
+  --secondary-color-yellow: #F4A261;
+  --secondary-background-yellow: #f4a3613f;
+  --primary-dark-gray: #5E5A5A;
+  --light-shadow: 0px 0px 2px rgb(170, 166, 166);
+  --light-shadow-2: 0px 0px 5px #4c2505c5;
 }
 
 *,

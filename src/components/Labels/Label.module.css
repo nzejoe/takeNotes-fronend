@@ -2,32 +2,64 @@
   padding-left: 1rem;
 }
 
-.active {
-  color: red;
+.label{
+  display: block;
+  background: transparent;
+  margin: .7rem 0;
+  padding: .5rem;
+  border-radius: 100px;
+  box-shadow: var(--light-shadow);
+  color: var(--primary-dark-gray);
+  text-decoration: none;
 }
 
-.label {
-  display: block;
-  text-decoration: none;
-  margin: 0.5rem 0;
+.label:hover{
+  background: var(--secondary-background-yellow);
+}
+
+.active {
+  color: var(--secondary-color-yellow);
+  background-color: var(--secondary-background-yellow);
+}
+
+.label__icon{
+  color: var(--secondary-color-yellow);
+  margin-right: .5rem;
 }
 
 .form__add {
   display: flex;
+  margin-top: 1rem;
 }
 
-.add__icon {
-  /* background: var(--primary-white); */
-  color: var(--primary-gray);
-  width: 50px;
-  transform: scale(1.5);
-  margin-top: 0.5rem;
+.label__add_btn{
+  position: relative;
+  outline: none;
+  border: none;
+  width: 40px;
+  height: 40px;
+  margin-top: .5rem;
+  background: transparent;
+  box-shadow: var(--light-shadow);
+  border-radius: 50%;
+  transition: transform .2s;
+}
+
+.label__add_icon {
+  font-size: 1.5rem;
+  position: absolute;
+  display: inline-block;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 1.5rem;
+  color: var(--primary-dark-gray);
   cursor: pointer;
-  transition: transform 0.5s;
 }
 
-.add__icon:hover {
-  transform: scale(2);
+.label__add_btn:hover {
+  transform: scale(1.3);
+  box-shadow: var(--light-shadow-2);
 }
 
 .add__label {
@@ -51,7 +83,7 @@
 
 .input:focus,
 .input:focus + .btn__submit {
-  box-shadow: inset 0 0 5px rgb(124, 124, 241);
+  box-shadow: inset var(--light-shadow);
 }
 
 .btn__submit {
@@ -66,6 +98,7 @@
 
 .btn__submit_icon{
   font-size: 1.5rem;
+  color: var(--primary-dark-gray);
   transition: all .2s;
 }
 .btn__submit:hover .btn__submit_icon{
@@ -77,15 +110,15 @@
 }
 
 .action__btn {
-  color: rgb(66, 65, 65);
+  color: var(--primary-dark-gray);
   margin-left: 0.2rem;
   cursor: pointer;
-  transition: transform 0.2s;
-  font-size: 12px;
+  transition: transform .2s;
+  font-size: .7rem;
 }
 
 .action__btn:hover {
-  transform: scale(1.2);
+  transform: scale(1.5);
 }
 
 .edit__actions {
@@ -99,18 +132,48 @@
   border-bottom-right-radius: 10px;
 }
 
-.edit__submit {
+.edit__actions_btn {
   outline: none;
   border: none;
+  display: inline;
   background-color: transparent;
+  transition: transform .2s;
 }
 
-.edit__actions_btn {
+.edit__actions_icon {
   font-size: 2rem;
-  padding: 0.3rem;
-  transition: transform .2s;
+  padding: .3rem;
+  color: var(--primary-dark-gray);
 }
 
 .edit__actions_btn:hover{
   transform: scale(1.2);
+}
+
+.close__btn{
+  position: relative;
+  display: inline-block;
+  outline: none;
+  border: none;
+  padding: .5rem;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: transparent;
+  box-shadow: var(--light-shadow);
+  cursor: pointer;
+  transition: all .2s;
+}
+
+.close__btn:hover{
+  transform: scale(1.3);
+  box-shadow: var(--light-shadow-2);
+}
+
+.close__btn_icon{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 2rem;
 }

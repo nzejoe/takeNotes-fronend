@@ -1,6 +1,5 @@
 import React, { useRef, useState, memo, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { closeModal } from "../../store/modal-slice";
 import {
   addLabel,
   refreshList,
@@ -12,8 +11,15 @@ import {
 import { onFocusLost } from "../../helpers";
 
 // icons
-import { FaEdit, FaTrash, FaSave, FaTimes } from "react-icons/fa";
-import { BsBookmarkCheck } from "react-icons/bs";
+import {
+  VscEdit,
+  VscTrash,
+  VscSave,
+  VscClose,
+  VscAdd,
+  VscArrowRight,
+} from "react-icons/vsc";
+
 
 // styles
 import styles from "./Label.module.css";
@@ -34,7 +40,6 @@ const Label = ({ label, token }) => {
   const handleDelete = () => {
     dispatch(deleteLabel({ id: label.id, token }));
     setIsEditing(false);
-    console.log("deleted");
   };
 
   useEffect(()=>{
@@ -52,7 +57,7 @@ const Label = ({ label, token }) => {
     <React.Fragment>
       {isEditing ? (
         <form
-          className={`${styles.form__add}`}
+          className={`${styles.form__add} ${styles.label__edit}`}
           onSubmit={handleSubmit}
           ref={editFormRef}
         >
@@ -64,27 +69,30 @@ const Label = ({ label, token }) => {
             className={styles.input}
           />
           <span className={styles.edit__actions}>
-            <button type="submit" className={styles.edit__submit}>
-              <FaSave className={styles.edit__actions_btn} title="Save" />
+            <button type="submit" className={styles.edit__actions_btn}>
+              <VscSave className={styles.edit__actions_icon} title="Save" />
             </button>
-            <FaTimes
-              className={styles.edit__actions_btn}
-              title="Cancel"
-              onClick={() => setIsEditing(false)}
-            />
+            <button className={styles.edit__actions_btn}>
+              <VscClose
+                className={styles.edit__actions_icon}
+                title="Cancel"
+                onClick={() => setIsEditing(false)}
+              />
+            </button>
           </span>
         </form>
       ) : (
         <span key={label.id} className={styles.label}>
-          {label.name}
+          <VscArrowRight className={styles.label__icon} />
+          <span style={{ marginLeft: "1rem" }}>{label.name}</span>
           <span className={styles.label__actions}>
             {" "}
-            <FaEdit
+            <VscEdit
               title="Edit"
               className={`${styles.action__edit} ${styles.action__btn}`}
               onClick={() => setIsEditing(true)}
             />{" "}
-            <FaTrash
+            <VscTrash
               title="Delete"
               className={`${styles.action__delete} ${styles.action__btn}`}
               onClick={handleDelete}
@@ -130,14 +138,16 @@ const LabelAdd = ({ closeModalHandler }) => {
           ref={labelRef}
         />
         <button type="submit" className={styles.btn__submit}>
-          <BsBookmarkCheck className={styles.btn__submit_icon} title="Add" />
+          <VscAdd className={styles.btn__submit_icon} title="Add" />
         </button>
       </form>
       {labels.map((label) => {
         return <Label key={label.id} label={label} token={token} />;
       })}
-      <hr />
-      <button onClick={closeModalHandler}>close</button>
+      <hr style={{margin: '1rem 0', color: "var(--primary-dark-gray)"}}/>
+      <button onClick={closeModalHandler} className={styles.close__btn} title="Cancel">
+        <VscClose className={styles.close__btn_icon} />
+      </button>
     </div>
   );
 };

@@ -2,7 +2,8 @@ import React, { useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import { addNewNote } from "../../store/note-slice";
-
+//icons
+import { VscClose, VscSave } from "react-icons/vsc";
 import styles from "./Note.module.css";
 
 const AddNote = ({ closeModalHandler }) => {
@@ -84,10 +85,19 @@ const AddNote = ({ closeModalHandler }) => {
           })}
         </select>
       </div>
-      <button type="submit">save</button>
-      <button type="button" onClick={closeModalHandler}>
-        Cancel
-      </button>
+      <div className={styles.form__actions}>
+        <button type="submit" className={styles.form__actions_btn}>
+          <VscSave className={styles.actions__icon} title="Save"/>
+        </button>
+        <button
+          type="button"
+          onClick={closeModalHandler}
+          className={`${styles.form__actions_btn}`}
+          title="Cancel"
+        >
+          <VscClose className={styles.actions__icon} title="Cancel"/>
+        </button>
+      </div>
     </form>
   );
 };

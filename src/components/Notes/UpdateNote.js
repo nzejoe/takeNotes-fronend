@@ -3,6 +3,9 @@ import { useSelector, useDispatch } from "react-redux";
 // note actions
 import { updateNote, refreshList } from "../../store/note-slice";
 
+//icons
+import { VscClose, VscSave } from "react-icons/vsc";
+
 // styles
 import styles from './Note.module.css'
 
@@ -81,8 +84,19 @@ const UpdateNote = ({ id, title, text, label: labelID, closeModalHandler }) => {
           })}
         </select>
       </div>
-      <button type="submit">save</button>
-      <button onClick={closeModalHandler}>cancel</button>
+      <div className={styles.form__actions}>
+        <button type="submit" className={styles.form__actions_btn}>
+          <VscSave className={styles.actions__icon} title="Save" />
+        </button>
+        <button
+          type="button"
+          onClick={closeModalHandler}
+          className={`${styles.form__actions_btn}`}
+          title="Cancel"
+        >
+          <VscClose className={styles.actions__icon} title="Cancel" />
+        </button>
+      </div>
     </form>
   );
 };

@@ -1,13 +1,16 @@
 import React, { useRef, memo } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
+// icons
+import { VscEdit, VscTrash } from "react-icons/vsc";
+
 import { openNoteModal } from "../../store/modal-slice";
 
 import { deleteNote, refreshList } from "../../store/note-slice";
 import { DateDashboard } from "../UI";
 
 // style
-import classes from "./Note.module.css";
+import styles from "./Note.module.css";
 
 const Note = ({ id, title, text, created, label: labelID }) => {
   const { authUser } = useSelector((state) => state.users);
@@ -47,17 +50,19 @@ const Note = ({ id, title, text, created, label: labelID }) => {
 
   return (
     <React.Fragment>
-      <div ref={formRef} className={`${classes.note}`}>
+      <div ref={formRef} className={`${styles.note}`}>
         <div>
           <DateDashboard date={created} />
           <h4>{title}</h4>
-          <p>{text}</p>
-          <p>
-            <small>{labelName}</small>
-          </p>
-          <div className="actions">
-            <button onClick={handleEdit}>Edit</button>
-            <button onClick={handleDelete}>Delete</button>
+          <p className={styles.note__text}>{text}</p>
+          <p className={styles.note__label}>{labelName}</p>
+          <div className={styles.note__actions}>
+            <button onClick={handleEdit} className={styles.note__actions_btn}>
+              <VscEdit className={styles.note__actions_icon} title="Edit" />
+            </button>
+            <button onClick={handleDelete} className={styles.note__actions_btn}>
+              <VscTrash className={styles.note__actions_icon} title="Delete" />
+            </button>
           </div>
         </div>
       </div>
