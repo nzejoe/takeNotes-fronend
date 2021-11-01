@@ -61,6 +61,33 @@ export const userRegister = createAsyncThunk(
   }
 );//*********************** end of user regiser thunk ***************************/
 
+//*********************** password reset thunk ***************************/
+export const userPasswordReset = createAsyncThunk(
+  'users/password_reset',
+  async (payload, { rejectWithValue, getState })=>{
+    const { csrf_token } = getState().users
+    
+    try {
+      const response = await axios({
+            method: "POST",
+            url: "accounts/password_reset/",
+            headers: {
+              "COntent-type": "application/json",
+              "X-CSRFToken": csrf_token,
+            },
+            data: payload,
+          });
+          return response.data
+    } catch (err) {
+      const error = err
+      if(!error){
+        throw err;
+      }
+      return rejectWithValue(error.response.data)
+    }
+  }
+)//*********************** end of password reset thunk ***************************/
+
 const userSlice = createSlice({
   name: "users",
   initialState: {
@@ -69,6 +96,7 @@ const userSlice = createSlice({
     isAuthenticated: Boolean(getAuthUser()),
     authUser: null,
     error: null,
+    data: null, // use this for password reset
     csrf_token: Cookie.get("csrftoken"),
   },
   reducers: {
@@ -121,7 +149,7 @@ const userSlice = createSlice({
     //******************** register *********************/
     [userRegister.pending] :(state, action) => {
       const { meta:{requestId} } = action // get the requestId
-
+      
       state.currentRequestId = requestId;
     },
     [userRegister.fulfilled] :(state, action) => {
@@ -135,6 +163,30 @@ const userSlice = createSlice({
         console.log(action.payload);
       }
     }, //******************** end of register *********************/
+
+    //******************** password reset *********************/
+    [userPasswordReset.pending] :(state, action) => {
+      const { requestId } = action.meta; // get the requestId
+
+      state.currentRequestId = requestId;
+      state.data = null
+    },
+    [userPasswordReset.fulfilled] :(state, action) => {
+      const { requestId } = action.meta; // get the requestId
+      if (state.currentRequestId === requestId){
+        state.data = action.payload;
+        console.log(action.payload)
+      }
+       state.error = null;
+      state.currentRequestId = null; // reset currentRequestId
+    },
+    [userPasswordReset.rejected] :(state, action) => {
+      const { requestId } = action.meta; // get the requestId
+      if (state.currentRequestId === requestId){
+        state.error = action.payload;
+        console.log(state.error);
+      }
+    }, //******************** end of password reset *********************/
     
   },
 });
