@@ -14,9 +14,11 @@ import Home from "./Routes/Home";
 import LabelRoute from "./Routes/LabelRoute";
 import LoginPage from "./Routes/LoginPage";
 import RegisterPage from "./Routes/RegisterPage";
-import  PasswordReset from "./components/Users/PasswordReset";
 import PrivateRoute from "./Routes/PrivateRoute";
 import PublicRoute from "./Routes/PublicRoute";
+
+// user component
+import { PasswordReset, PasswordResetConfirm, PasswordResetComplete } from "./components/Users";
 
 import userActions from "./store/users-slice";
 import { getAuthUser } from "./helpers";
@@ -62,8 +64,14 @@ function App() {
         <PublicRoute path="/account/register">
           <RegisterPage />
         </PublicRoute>
-        <PublicRoute path="/account/password_reset">
+        <PublicRoute path="/account/password_reset" exact>
           <PasswordReset />
+        </PublicRoute>
+        <PublicRoute path="/account/password_reset_confirm/:uidb64/:token">
+          <PasswordResetConfirm />
+        </PublicRoute>
+        <PublicRoute path="/account/password_reset_complete/:id">
+          <PasswordResetComplete />
         </PublicRoute>
         <Route path="/" exact>
           <Redirect to="/home" />
