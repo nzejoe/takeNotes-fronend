@@ -19,12 +19,17 @@ const useInput = (getValidInput)=>{
       setIsTouched(true);
     };
 
+    const resetValue = ()=>{
+        setValue('')
+    }
+
     return {
         value,
         isValid,
         hasError,
         onChange,
         onBlur,
+        resetValue,
     }
 
 }

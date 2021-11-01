@@ -105,13 +105,21 @@ const LoginForm = () => {
         <button type="submit" className={styles.form__btn}>
           Log in
         </button>
+      </div>
+        <div className="form__links">
         <small>
           Don't an account?{" "}
           <Link to="/account/register" className={styles.form__link}>
             Create account
           </Link>
         </small>
-      </div>
+        <small>
+          Forgot password? {" "}
+          <Link to="/account/password_reset" className={styles.form__link}>
+           reset
+          </Link>
+        </small>
+        </div>
     </form>
   );
 };

@@ -14,6 +14,7 @@ import Home from "./Routes/Home";
 import LabelRoute from "./Routes/LabelRoute";
 import LoginPage from "./Routes/LoginPage";
 import RegisterPage from "./Routes/RegisterPage";
+import  PasswordReset from "./components/Users/PasswordReset";
 import PrivateRoute from "./Routes/PrivateRoute";
 import PublicRoute from "./Routes/PublicRoute";
 
@@ -60,6 +61,9 @@ function App() {
         </PublicRoute>
         <PublicRoute path="/account/register">
           <RegisterPage />
+        </PublicRoute>
+        <PublicRoute path="/account/password_reset">
+          <PasswordReset />
         </PublicRoute>
         <Route path="/" exact>
           <Redirect to="/home" />

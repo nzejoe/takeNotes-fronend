@@ -21,7 +21,7 @@
 }
 
 .form__error {
-  margin: .5rem 0;
+  margin: 0.5rem 0;
   display: inline-block;
   padding: 0.2rem;
   opacity: 0;
@@ -64,6 +64,24 @@
 
 .submit__error {
   background: rgba(184, 107, 184, 0.822);
-  cursor: not-allowed; 
+  cursor: not-allowed;
+}
+
+.password_reset_input {
+  display: block;
+  width: 100%;
+  padding: 0.7rem 0.5rem 0 0.1rem;
+  outline: none;
+  border: none;
+  border-bottom: 1px solid rgb(177, 177, 177);
+  margin: .5rem 0;
+}
+
+.password_reset_input::placeholder{
+  font-size: 1rem;
+}
+
+.password__reset_info{
+  margin-bottom: .8rem;
 }
 /*************** end of form style  *********************/
