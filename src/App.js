@@ -18,7 +18,12 @@ import PrivateRoute from "./Routes/PrivateRoute";
 import PublicRoute from "./Routes/PublicRoute";
 
 // user component
-import { PasswordReset, PasswordResetConfirm, PasswordResetComplete } from "./components/Users";
+import {
+  PasswordReset,
+  PasswordResetConfirm,
+  PasswordResetComplete,
+  PasswordChange,
+} from "./components/Users";
 
 import userActions from "./store/users-slice";
 import { getAuthUser } from "./helpers";
@@ -55,9 +60,9 @@ function App() {
   return (
     <Router>
       <Switch>
-      <PrivateRoute path="/NOTE/:id" exact>
-        <Modal />
-      </PrivateRoute>
+        <PrivateRoute path="/NOTE/:id" exact>
+          <Modal />
+        </PrivateRoute>
         <PublicRoute path="/account/login">
           <LoginPage />
         </PublicRoute>
@@ -73,9 +78,12 @@ function App() {
         <PublicRoute path="/account/password_reset_complete/:id">
           <PasswordResetComplete />
         </PublicRoute>
-        <Route path="/" exact>
+        <PrivateRoute path="/account/password_change">
+          <PasswordChange/>
+        </PrivateRoute>
+        <PrivateRoute path="/" exact>
           <Redirect to="/home" />
-        </Route>
+        </PrivateRoute>
         <PrivateRoute path="/home" exact>
           <Home />
         </PrivateRoute>

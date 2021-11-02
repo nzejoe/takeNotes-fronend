@@ -135,7 +135,7 @@ const PasswordResetComplete = () => {
             />
             <Input
               type="password"
-              placeholder="Enter new password"
+              placeholder="confirm password"
               value={password2}
               onChange={onPassword2Change}
               onBlur={onPassword2Blur}

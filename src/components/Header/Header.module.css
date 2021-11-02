@@ -38,6 +38,23 @@
    margin-right: .5rem;
 }
 
+.user__password_change:link,
+.user__password_change:visited{
+    text-decoration: none;
+    padding: 0 .2rem .2rem .2rem;
+    margin-right: .5rem;
+    border: 1px solid var(--secondary-color-yellow);
+    border-radius: 100px;
+    background: transparent;
+    color: var(--primary-dark-gray);
+    transition: all .2s;
+}
+
+.user__password_change:hover{
+    background: var(--secondary-background-yellow);
+    color: var(--secondary-color-yellow);
+}
+
 .logout__btn{
     display: inline-block;
     position: relative;

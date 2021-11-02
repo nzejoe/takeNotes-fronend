@@ -6,6 +6,7 @@ import RegisterForm from "./RegisterForm";
 import PasswordReset from "./PasswordReset";
 import PasswordResetConfirm from "./PasswordResetConfirm";
 import PasswordResetComplete from "./PasswordResetComplete";
+import PasswordChange from "./PasswordChange";
 
 import styles from "./Users.module.css";
 
@@ -19,4 +20,5 @@ export {
   PasswordReset,
   PasswordResetConfirm,
   PasswordResetComplete,
+  PasswordChange,
 };

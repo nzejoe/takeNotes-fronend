@@ -25,6 +25,7 @@ const AuthUser = () => {
       {authUser ? (
         <p className={styles.user__info}>
           <span className={styles.user__greeting}> Welcome, {authUser.username} </span>
+          <Link to="account/password_change" className={styles.user__password_change}>Change password</Link>
           <a href="no-route" onClick={logoutHandler} className={styles.logout__btn}>
             <AiOutlineLogout className={styles.logout__icon} title="Log out"/>
           </a>

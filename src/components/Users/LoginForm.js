@@ -106,20 +106,20 @@ const LoginForm = () => {
           Log in
         </button>
       </div>
-        <div className="form__links">
-        <small>
+      <div className="form__links">
+        <small className={styles.form__link_wrapper}>
           Don't an account?{" "}
           <Link to="/account/register" className={styles.form__link}>
             Create account
           </Link>
         </small>
-        <small>
-          Forgot password? {" "}
+        <small className={styles.form__link_wrapper}>
+          Forgot password?{" "}
           <Link to="/account/password_reset" className={styles.form__link}>
-           reset
+            reset
           </Link>
         </small>
-        </div>
+      </div>
     </form>
   );
 };

@@ -58,6 +58,10 @@
   color: blue;
 }
 
+.form__link_wrapper{
+  display: block;
+}
+
 .form__link:hover {
   text-decoration: underline;
 }
