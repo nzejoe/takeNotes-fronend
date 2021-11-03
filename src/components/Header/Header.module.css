@@ -1,79 +1,173 @@
-.logo__wrapper{
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.logo__wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.logo{
-    width: 40px;
-    height: auto;
+.logo {
+  width: 40px;
+  height: auto;
 }
 
-.logo__text{
-    color: var(--primary-dark-gray);
+.logo__text {
+  color: var(--primary-dark-gray);
 }
 
-.logo__wrapper > .logo__text, .logo{
-    display: block;
+.logo__wrapper > .logo__text,
+.logo {
+  display: block;
 }
 
-.user__auth{
-    color: var(--primary-dark-gray);
-    background: transparent;
-    padding: .5rem 1rem;
-    border-radius: 1rem;
-    box-shadow: var(--light-shadow);
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.menu__wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.user__info{
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.toggle__wrapper {
+  display: none;
+  width: 40px;
+  height: 40px;
+  border: 1px solid var(--primary-dark-gray);
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
 }
 
-.user__greeting{
-   margin-right: .5rem;
+.toggle__btn {
+  color: var(--secondary-color-yellow);
+  transition: all 0.2s;
+}
+
+.toggle__wrapper:hover .toggle__btn {
+  transform: scale(1.5);
+}
+
+.user__auth {
+  color: var(--primary-dark-gray);
+  background: transparent;
+  padding: 0.5rem 1rem;
+  border-radius: 1rem;
+  box-shadow: var(--light-shadow);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all .2s;
+}
+
+.user__info {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.user__greeting {
+  margin-right: 0.5rem;
 }
 
 .user__password_change:link,
-.user__password_change:visited{
-    text-decoration: none;
-    padding: 0 .2rem .2rem .2rem;
-    margin-right: .5rem;
-    border: 1px solid var(--secondary-color-yellow);
-    border-radius: 100px;
-    background: transparent;
-    color: var(--primary-dark-gray);
-    transition: all .2s;
+.user__password_change:visited {
+  text-decoration: none;
+  padding: 0 0.2rem 0.2rem 0.2rem;
+  margin-right: 0.5rem;
+  border: 1px solid var(--secondary-color-yellow);
+  border-radius: 100px;
+  background: transparent;
+  color: var(--primary-dark-gray);
+  transition: all 0.2s;
 }
 
-.user__password_change:hover{
-    background: var(--secondary-background-yellow);
-    color: var(--secondary-color-yellow);
+.user__password_change:hover {
+  background: var(--secondary-background-yellow);
+  color: var(--secondary-color-yellow);
 }
 
-.logout__btn{
-    display: inline-block;
-    position: relative;
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
-    padding: .2rem;
-    border: 1px solid var(--secondary-color-yellow);
-    transition: all .2s;
+.logout__btn {
+  display: inline-block;
+  position: relative;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  padding: 0.2rem;
+  border: 1px solid var(--secondary-color-yellow);
+  transition: all 0.2s;
 }
 
-.logout__btn:hover{
-    transform: scale(1.5);
-    box-shadow: var(--light-shadow-2);
+.logout__btn:hover {
+  transform: scale(1.5);
+  box-shadow: var(--light-shadow-2);
 }
 
-.logout__icon{
+.logout__icon {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.menu__close_btn{
+    display: none;
+    justify-content: center;
+    align-items: center;
     position: absolute;
-    left: 50%;
+    bottom: 5px;
+    right: 5px;
+    width: 20px;
+    height: 20px;;
+    border-radius: 50%;
+    padding: 1rem;
+    background-color: transparent;
+    box-shadow: var(--light-shadow);
+    cursor: pointer;
+    transition: all .2s;
+}
+
+.menu__close_btn:hover{
+    transform: scale(1.2);
+}
+
+.menu__close_icon{
+    font-size: 1.8rem;
+    position: absolute;
     top: 50%;
+    left: 50%;
     transform: translate(-50%, -50%);
+}
+
+
+@media screen and (max-width: 599px) {
+  .menu__wrapper {
+    display: block;
+  }
+  
+  .user__auth {
+    display: block;
+    position: fixed;
+    right: -100%;
+    top: 0;
+    height: 10rem;
+    background: var(--primary-white);
+  }
+
+  .menu__wrapper_show{
+      right: 0;
+  }
+
+  .toggle__wrapper {
+    display: flex;
+  }
+
+  .user__info {
+    display: block;
+  }
+
+  .user__greeting,
+  .user__password_change {
+    display: block;
+    margin-bottom: 1rem;
+  }
+
+  .menu__close_btn{
+      display: block;
+  }
 }
