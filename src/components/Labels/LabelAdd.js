@@ -82,7 +82,7 @@ const Label = ({ label, token }) => {
           </span>
         </form>
       ) : (
-        <span key={label.id} className={styles.label}>
+        <span key={label.id} className={styles.label__add_list}>
           <VscArrowRight className={styles.label__icon} />
           <span style={{ marginLeft: "1rem" }}>{label.name}</span>
           <span className={styles.label__actions}>

@@ -99,6 +99,12 @@ const PasswordReset = () => {
               Send request
             </button>
           </div>
+          <small>
+            Have password?{" "}
+            <Link to="/account/login" className={styles.form__link}>
+              Log in
+            </Link>
+          </small>
         </form>
       )}
     </Authentication>

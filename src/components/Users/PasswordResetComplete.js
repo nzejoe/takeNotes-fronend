@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams, useHistory } from "react-router";
+import { useParams, useHistory, Link } from "react-router-dom";
 import axios from "axios";
 import Cookies from "js-cookie";
 
@@ -111,7 +111,7 @@ const PasswordResetComplete = () => {
             </h4>
             <p>Your new password has been set successfully.</p>
             <p>
-              <small style={{ marginTop: "1rem", fontWeight: 'bold'}}>
+              <small style={{ marginTop: "1rem", fontWeight: "bold" }}>
                 Please wait...
               </small>
             </p>
@@ -158,6 +158,12 @@ const PasswordResetComplete = () => {
                 Save password
               </button>
             </div>
+            <small>
+              Have password?{" "}
+              <Link to="/account/login" className={styles.form__link}>
+                Log in
+              </Link>
+            </small>
           </form>
         )
       ) : (

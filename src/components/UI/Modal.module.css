@@ -1,29 +1,38 @@
-.overlay{
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    background: rgba(0, 0, 0, 0.295);
-    z-index: 1000;
-    transition: all 1s;
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.295);
+  z-index: 1000;
+  transition: all 1s;
 }
 
-.content{
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    animation: slideDown 1s forwards;
-    opacity: 0;
+.content {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 400px;
+  height: auto;
+  transform: translate(-50%, -50%);
+  animation: slideDown 1s forwards;
+  opacity: 0;
 }
 
 @keyframes slideDown {
-    from {
-        top: 30%;
-        opacity: 0;
-    }to{
-       top: 50%;
-       opacity: 1;
-    }
+  from {
+    top: 30%;
+    opacity: 0;
+  }
+  to {
+    top: 50%;
+    opacity: 1;
+  }
+}
+
+@media screen and (max-width: 599px){
+  .content {
+    width: 300px;
+  }
 }

@@ -4,14 +4,14 @@
   left: 0;
   width: 100vw;
   height: 4rem;
-  z-index: 1;
+  z-index: 50;
   padding: 1rem;
   padding-right: 2rem;
   display: flex;
   justify-content: space-between;
 }
 
-.input__wrapper{
+.input__wrapper {
   width: 40%;
   margin: 1rem auto;
   text-align: center;
@@ -19,14 +19,14 @@
   border-radius: 5px;
   padding: 0 1rem;
   box-shadow: 0 0 5px var(--primary-gray);
-  transition: all .2s;
+  transition: all 0.2s;
 }
 
-.input__wrapper:hover{
+.input__wrapper:hover {
   box-shadow: var(--light-shadow-2);
 }
 
-.input{
+.input {
   display: inline-block;
   width: 90%;
   border: none;
@@ -34,12 +34,47 @@
   height: 2.5rem;
 }
 
-.main{
-  display: grid;
-  grid-template-columns: 1fr 7fr;
+.main {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
   margin-top: 5rem;
 }
 
-.aside{
-  margin: 0 1rem;
+.note__list {
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  margin: auto;
+}
+
+.aside {
+  flex: 0 0 10%;
+  transition: all 1s;
+}
+
+.content__main {
+  padding: .5rem;
+  flex: 0 0 90%;
+}
+@media screen and (max-width: 599px) {
+  .input__wrapper{
+    width: 95%;
+    /* margin: 1rem auto */
+  }
+
+  .aside {
+    flex: 0 0 15%;
+  }
+
+  .content__main {
+    flex: 0 0 85%;
+    padding-right: 1.5rem;
+  }
+}
+@media screen and (max-width: 699px), (max-width: 799px) , (max-width: 899px), (max-width: 999px){
+  .input__wrapper{
+    width: 70%;
+    /* margin: 1rem auto */
+  }
 }

@@ -51,7 +51,6 @@ const Note = ({ id, title, text, created, label: labelID }) => {
   return (
     <React.Fragment>
       <div ref={formRef} className={`${styles.note}`}>
-        <div>
           <DateDashboard date={created} />
           <h4>{title}</h4>
           <p className={styles.note__text}>{text}</p>
@@ -64,7 +63,6 @@ const Note = ({ id, title, text, created, label: labelID }) => {
               <VscTrash className={styles.note__actions_icon} title="Delete" />
             </button>
           </div>
-        </div>
       </div>
     </React.Fragment>
   );

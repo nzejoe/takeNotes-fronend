@@ -7,11 +7,9 @@ const LoginPage = () => {
     document.title = "Login | TakeNotes";
 
     return (
-      <div style={{position: 'relative', width: '100%', height: '100%'}}>
         <Authentication>
             <Login/>
         </Authentication>
-      </div>
     );
 }
 

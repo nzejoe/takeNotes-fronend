@@ -16,6 +16,11 @@
   padding: 1rem;
 }
 
+.login__form{
+  width: 100%;
+  padding: 1rem;
+}
+
 .form__info {
   text-align: center;
 }

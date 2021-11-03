@@ -65,9 +65,9 @@ const AuthUser = () => {
                 title="Log out"
               />
             </a>
-            <div className={styles.menu__close_btn} onClick={()=>setShowMenu(false)}>
+            <span className={styles.menu__close_btn} onClick={()=>setShowMenu(false)}>
               <VscClose className={styles.menu__close_icon} />
-            </div>
+            </span>
           </p>
         ) : (
           <Link to="account/login">Login</Link>

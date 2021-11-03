@@ -5,10 +5,10 @@ import { Main, Header } from ".";
 
 const Content = () => {
   return (
-    <div >
+    <>
       <Header/>
       <Main/>
-    </div>
+    </>
   );
 };
 

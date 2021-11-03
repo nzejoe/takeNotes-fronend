@@ -1,19 +1,61 @@
 .wrapper {
-  padding-left: 1rem;
+  position: fixed;
+  top: 4rem;
+  left: 0;
+  height: 100%;
+  margin: 0 0.5rem;
+  z-index: 2;
+  padding-right: .5rem;
+  transition: all .2s;
 }
 
-.label{
-  display: block;
+.wrapper__show_label {
+  /* width: 200px, auto; */
+  background: var(--primary-white-1);
+}
+
+.label {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 40px;
+  height: 40px;
   background: transparent;
-  margin: .7rem 0;
-  padding: .5rem;
-  border-radius: 100px;
+  margin: 0.7rem 0;
+  /* padding: .5rem; */
+  border-radius: 50%;
   box-shadow: var(--light-shadow);
   color: var(--primary-dark-gray);
   text-decoration: none;
+  transition: all 0.2s;
 }
 
-.label:hover{
+.label__toggle {
+  font-size: 2rem;
+  color: var(--secondary-color-yellow);
+  display: none;
+}
+
+.label__toggle_off {
+  display: none;
+}
+.label__toggle_on {
+  display: none;
+}
+
+.show__label {
+  width: 100%;
+  padding: 0.5rem;
+  border-radius: 100px;
+  justify-content: flex-start;
+}
+
+.show__label .label__name {
+  display: block;
+  margin-left: 0.5rem;
+}
+
+.label:hover {
   background: var(--secondary-background-yellow);
 }
 
@@ -22,9 +64,14 @@
   background-color: var(--secondary-background-yellow);
 }
 
-.label__icon{
+.label__icon {
   color: var(--secondary-color-yellow);
-  margin-right: .5rem;
+  /* margin-right: .5rem; */
+}
+
+.label__name {
+  display: none;
+  transition: all 0.2s;
 }
 
 .form__add {
@@ -32,17 +79,17 @@
   margin-top: 1rem;
 }
 
-.label__add_btn{
+.label__add_btn {
   position: relative;
   outline: none;
   border: none;
   width: 40px;
   height: 40px;
-  margin-top: .5rem;
+  margin-top: 0.5rem;
   background: transparent;
   box-shadow: var(--light-shadow);
   border-radius: 50%;
-  transition: transform .2s;
+  transition: transform 0.2s;
 }
 
 .label__add_icon {
@@ -63,11 +110,12 @@
 }
 
 .add__label {
-  width: 20rem;
+  width: 100%;
   background-color: var(--primary-white);
   padding: 1rem;
   border-radius: 10px;
   transition: all 1s;
+  margin: auto;
 }
 
 .input {
@@ -86,8 +134,20 @@
   box-shadow: inset var(--light-shadow);
 }
 
+.label__add_list{
+  display: block;
+  border-radius: 100px;
+  padding: .5rem;
+  margin-top: .5rem;
+  box-shadow: var(--light-shadow);
+}
+
+.label__add_list:hover{
+  background: var(--secondary-background-yellow);
+}
+
 .btn__submit {
-  padding: 0.2rem .2rem;
+  padding: 0.2rem 0.2rem;
   outline: none;
   border: 1px solid var(--primary-gray);
   border-top-right-radius: 10px;
@@ -96,12 +156,12 @@
   cursor: pointer;
 }
 
-.btn__submit_icon{
+.btn__submit_icon {
   font-size: 1.5rem;
   color: var(--primary-dark-gray);
-  transition: all .2s;
+  transition: all 0.2s;
 }
-.btn__submit:hover .btn__submit_icon{
+.btn__submit:hover .btn__submit_icon {
   transform: scale(1.2);
 }
 
@@ -113,8 +173,8 @@
   color: var(--primary-dark-gray);
   margin-left: 0.2rem;
   cursor: pointer;
-  transition: transform .2s;
-  font-size: .7rem;
+  transition: transform 0.2s;
+  font-size: 0.7rem;
 }
 
 .action__btn:hover {
@@ -137,43 +197,56 @@
   border: none;
   display: inline;
   background-color: transparent;
-  transition: transform .2s;
+  transition: transform 0.2s;
 }
 
 .edit__actions_icon {
   font-size: 2rem;
-  padding: .3rem;
+  padding: 0.3rem;
   color: var(--primary-dark-gray);
 }
 
-.edit__actions_btn:hover{
+.edit__actions_btn:hover {
   transform: scale(1.2);
 }
 
-.close__btn{
+.close__btn {
   position: relative;
   display: inline-block;
   outline: none;
   border: none;
-  padding: .5rem;
+  padding: 0.5rem;
   width: 40px;
   height: 40px;
   border-radius: 50%;
   background: transparent;
   box-shadow: var(--light-shadow);
   cursor: pointer;
-  transition: all .2s;
+  transition: all 0.2s;
 }
 
-.close__btn:hover{
+.close__btn:hover {
   transform: scale(1.3);
   box-shadow: var(--light-shadow-2);
 }
 
-.close__btn_icon{
+.close__btn_icon {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   font-size: 2rem;
+}
+
+@media screen and (hover: none) {
+  .label__toggle {
+    display: inline;
+  }
+
+  .label__toggle_off {
+    display: none;
+  }
+  .label__toggle_on {
+    display: none;
+  }
 }
