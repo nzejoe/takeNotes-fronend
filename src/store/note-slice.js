@@ -180,7 +180,7 @@ const {actions, reducer} = createSlice({
     [addNewNote.fulfilled]: (state, action) => {
       const { requestId } = action.meta; // get request id
       if (state.curentRequestId === requestId) {
-        state.refresh++;
+        state.refresh = Math.random();
         state.curentRequestId = null;
       }
     },
@@ -200,6 +200,7 @@ const {actions, reducer} = createSlice({
     [updateNote.fulfilled]: (state, action) => {
       const { requestId } = action.meta; // get request id
       if (state.curentRequestId === requestId) {
+        state.refresh = Math.random();
         state.curentRequestId = null;
       }
     },
@@ -219,6 +220,7 @@ const {actions, reducer} = createSlice({
     [deleteNote.fulfilled]: (state, action) => {
       const { requestId } = action.meta; // get request id
       if (state.curentRequestId === requestId) {
+        state.refresh = Math.random();
         state.curentRequestId = null;
       }
     },

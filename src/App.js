@@ -33,7 +33,7 @@ import Modal from "./components/UI/Modal";
 import "./App.css";
 
 // set axios default baseURL
-axios.defaults.baseURL = "http://localhost:8000/";
+axios.defaults.baseURL = "https://codegenesis-takenotes.herokuapp.com/";
 
 function App() {
   const { isAuthenticated, authUser } = useSelector((state) => state.users);
