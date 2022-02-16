@@ -34,6 +34,8 @@ import "./App.css";
 
 // set axios default baseURL
 axios.defaults.baseURL = "https://codegenesis-takenotes.herokuapp.com/";
+// axios.defaults.baseURL = "http://localhost:8000";
+axios.defaults.withCredentials = true;
 
 function App() {
   const { isAuthenticated, authUser } = useSelector((state) => state.users);
