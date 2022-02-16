@@ -13,7 +13,7 @@ const NoteList = () => {
   const dispatch = useDispatch();
 
   useEffect(()=>{
-    dispatch(fetchNotes())
+    dispatch(fetchNotes());
   },[refresh, dispatch])
 
   return (

@@ -10,29 +10,26 @@
 }
 
 .content {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  width: 400px;
-  height: auto;
-  transform: translate(-50%, -50%);
+  position: relative;
+  display: flex;
+  padding: 0 1rem;
+  padding-top: 5rem;
+  justify-content: center;
+  z-index: 1100;
+  width: 100vw;
+  min-height: 100%;
   animation: slideDown 1s forwards;
   opacity: 0;
+  overflow-y: scroll;
 }
 
 @keyframes slideDown {
   from {
-    top: 30%;
+    margin-top: -5rem;
     opacity: 0;
   }
   to {
-    top: 50%;
+    margin-top: 0;
     opacity: 1;
-  }
-}
-
-@media screen and (max-width: 599px){
-  .content {
-    width: 300px;
   }
 }
