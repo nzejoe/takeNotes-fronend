@@ -1,13 +1,20 @@
-import React from 'react'
-import { useSelector } from 'react-redux'
+import React, { useEffect } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
 
 import { Note } from '.';
+import { fetchNotes } from '../../store/note-slice';
 
 // styles
 import classes from "./Note.module.css";
 
 const NoteList = () => {
-  const { filteredNotes } = useSelector((state) => state.note);
+  const { filteredNotes, refresh } = useSelector((state) => state.note);
+
+  const dispatch = useDispatch();
+
+  useEffect(()=>{
+    dispatch(fetchNotes())
+  },[refresh, dispatch])
 
   return (
     <div className={classes['note-list']}>

@@ -124,7 +124,7 @@ const {actions, reducer} = createSlice({
 
     refreshList(state, action) {
       // refresh the note list
-      state.refresh++;
+      state.refresh = Math.random();
       return state;
     },
 
