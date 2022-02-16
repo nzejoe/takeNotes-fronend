@@ -51,18 +51,18 @@ const Note = ({ id, title, text, created, label: labelID }) => {
   return (
     <React.Fragment>
       <div ref={formRef} className={`${styles.note}`}>
-          <DateDashboard date={created} />
-          <h4>{title}</h4>
-          <p className={styles.note__text}>{text}</p>
-          <p className={styles.note__label}>{labelName}</p>
-          <div className={styles.note__actions}>
-            <button onClick={handleEdit} className={styles.note__actions_btn}>
-              <VscEdit className={styles.note__actions_icon} title="Edit" />
-            </button>
-            <button onClick={handleDelete} className={styles.note__actions_btn}>
-              <VscTrash className={styles.note__actions_icon} title="Delete" />
-            </button>
-          </div>
+        <DateDashboard date={created} />
+        <h4 style={{ marginBottom: ".5rem" }}>{title}</h4>
+        <p className={styles.note__text}>{text}</p>
+        <p className={styles.note__label}>{labelName}</p>
+        <div className={styles.note__actions}>
+          <button onClick={handleEdit} className={styles.note__actions_btn}>
+            <VscEdit className={styles.note__actions_icon} title="Edit" />
+          </button>
+          <button onClick={handleDelete} className={styles.note__actions_btn}>
+            <VscTrash className={styles.note__actions_icon} title="Delete" />
+          </button>
+        </div>
       </div>
     </React.Fragment>
   );

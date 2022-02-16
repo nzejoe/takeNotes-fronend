@@ -18,13 +18,15 @@ const DateDashboard = ({date}) => {
     const minutesFormatted = minutes < 10 ? '0'+minutes: minutes
 
     return (
-      <small>
-        {daysWeek[dateCreated.getDay()]},{" "}
+      <div className='timestamp' style={{marginBottom: '.5rem'}}>
         <small>
-         { `${dayFormatted} ${month[dateCreated.getMonth()]}
+          {daysWeek[dateCreated.getDay()]},{" "}
+          <small>
+            {`${dayFormatted} ${month[dateCreated.getMonth()]}
           ${dateCreated.getFullYear()} ${hourFormatted}:${minutesFormatted}`}
+          </small>
         </small>
-      </small>
+      </div>
     );
 }
 

@@ -61,7 +61,7 @@ const UpdateNote = ({ id, title, text, label: labelID, closeModalHandler }) => {
           id="text"
           placeholder="note"
           cols="50"
-          rows="10"
+          rows="4"
           value={enteredText}
           onChange={(e) => setEnteredText(e.target.value)}
         />

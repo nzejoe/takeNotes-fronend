@@ -62,7 +62,7 @@ const AddNote = ({ closeModalHandler }) => {
           placeholder="Take a note..."
           ref={textRef}
           cols="50"
-          rows="10"
+          rows="4"
           className={styles.input}
         />
       </div>
