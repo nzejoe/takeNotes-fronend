@@ -52,7 +52,7 @@ const Note = ({ id, title, text, created, label: labelID }) => {
     <React.Fragment>
       <div ref={formRef} className={`${styles.note}`}>
         <DateDashboard date={created} />
-        <h4 style={{ marginBottom: ".5rem" }}>{title}</h4>
+        {title  && <h4 style={{ marginBottom: ".5rem" }}>{title}</h4>}
         <p className={styles.note__text}>{text}</p>
         <p className={styles.note__label}>{labelName}</p>
         <div className={styles.note__actions}>

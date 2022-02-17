@@ -12,6 +12,7 @@ const AddNote = ({ closeModalHandler }) => {
   const { labels } = useSelector((state) => state.label);
   // useState
   const [selectLabel, setSelectedLabel] = useState("");
+  const [formError, setFormError] = useState(false);
   // useRef
   const titleRef = useRef();
   const textRef = useRef();
@@ -29,13 +30,15 @@ const AddNote = ({ closeModalHandler }) => {
       label: selectLabel,
     };
 
-    if (newNote.text && newNote.title) {
+    if (newNote.text) {
       dispatch(addNewNote({ newNote, token }));
 
       closeModalHandler(); // close modal
 
       titleRef.current.value = "";
       textRef.current.value = "";
+    }else{
+      setFormError(true)
     }
   };
 
@@ -43,8 +46,15 @@ const AddNote = ({ closeModalHandler }) => {
     setSelectedLabel(event.target.value);
   };
 
+  const handleFormError = () => {
+    setFormError(false);
+  };
+
   return (
     <form onSubmit={handleSubmit} className={`${styles.form__update}`}>
+      {formError && (
+        <p className={styles.error__msg}>{"Please write your note."}</p>
+      )}
       <div className="form-group">
         <label htmlFor="title"></label>
         <input
@@ -53,6 +63,7 @@ const AddNote = ({ closeModalHandler }) => {
           placeholder="Title"
           ref={titleRef}
           className={styles.input}
+          onChange={handleFormError}
         />
       </div>
       <div className="form-group">
@@ -64,6 +75,7 @@ const AddNote = ({ closeModalHandler }) => {
           cols="50"
           rows="4"
           className={styles.input}
+          onChange={handleFormError}
         />
       </div>
       <div className="form-group">
@@ -87,7 +99,7 @@ const AddNote = ({ closeModalHandler }) => {
       </div>
       <div className={styles.form__actions}>
         <button type="submit" className={styles.form__actions_btn}>
-          <VscSave className={styles.actions__icon} title="Save"/>
+          <VscSave className={styles.actions__icon} title="Save" />
         </button>
         <button
           type="button"
@@ -95,7 +107,7 @@ const AddNote = ({ closeModalHandler }) => {
           className={`${styles.form__actions_btn}`}
           title="Cancel"
         >
-          <VscClose className={styles.actions__icon} title="Cancel"/>
+          <VscClose className={styles.actions__icon} title="Cancel" />
         </button>
       </div>
     </form>

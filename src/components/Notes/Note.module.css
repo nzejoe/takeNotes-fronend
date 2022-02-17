@@ -16,6 +16,11 @@
   color: var(--primary-dark-gray);
 }
 
+.error__msg{
+  color: #ff5c5c;
+  margin-bottom: .5rem;
+}
+
 .note__text{
   color: var(--primary-dark-gray);
 }
@@ -73,10 +78,10 @@
 }
 
 .form__update{
+  align-self: baseline;
   padding: 1rem;
   width: 100%;
   max-width: 35rem;
-  height: 15rem;
   border-radius: 10px;
   background-color: var(--primary-white);
   transition: all 1s;
