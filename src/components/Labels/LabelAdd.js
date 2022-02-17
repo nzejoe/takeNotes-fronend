@@ -106,7 +106,7 @@ const Label = ({ label, token }) => {
 
 const LabelAdd = ({ closeModalHandler }) => {
   const { authUser } = useSelector((state) => state.users);
-  const { labels } = useSelector((state) => state.label);
+  const { labels, error } = useSelector((state) => state.label);
   const labelRef = useRef();
 
   const dispatch = useDispatch();
@@ -130,6 +130,7 @@ const LabelAdd = ({ closeModalHandler }) => {
 
   return (
     <div className={`${styles.add__label}`}>
+      {error && <p className={styles.form__error}>{error.name}</p>}
       <form className={`${styles.form__add}`} onSubmit={handleSubmit}>
         <input
           type="text"

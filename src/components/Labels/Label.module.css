@@ -111,11 +111,12 @@
 
 .add__label {
   width: 100%;
+  align-self: baseline;
+  max-width: 25rem;
   background-color: var(--primary-white);
   padding: 1rem;
   border-radius: 10px;
   transition: all 1s;
-  margin: auto;
 }
 
 .input {
@@ -127,6 +128,10 @@
   border-top-left-radius: 10px;
   border-bottom-left-radius: 10px;
   outline: none;
+}
+
+.form__error{
+  color: #ff5656;
 }
 
 .input:focus,

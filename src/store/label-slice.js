@@ -111,6 +111,7 @@ const { actions, reducer } = createSlice({
   initialState: {
     currentRequestId: null,
     labels: [{ id: 0, name: "" }],
+    error: null,
     refresh: 0,
   },
   reducers: {
@@ -148,6 +149,7 @@ const { actions, reducer } = createSlice({
       [addLabel.fulfilled]:(state, action)=>{
         const { requestId } = action.meta
         if(state.currentRequestId === requestId){
+            state.error = null;
             state.refresh ++
             state.currentRequestId = null
         }
@@ -155,7 +157,9 @@ const { actions, reducer } = createSlice({
       [addLabel.rejected]:(state, action)=>{
         const { requestId } = action.meta
         if(state.currentRequestId === requestId){
-            console.log(action.payload)
+            // console.log(action.payload);
+            state.error = action.payload;
+            console.log(state.error)
             state.currentRequestId = null
         }
       },// end of add
