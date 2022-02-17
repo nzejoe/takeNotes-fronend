@@ -6,14 +6,11 @@ import { getAllNotes } from "../store/note-slice";
 
 const Home = () => {
   const { allNotes } = useSelector(state => state.note);
-  const { isAuthenticated } = useSelector(state => state.users);
   const dispatch = useDispatch();
 
-  useEffect(()=>{
-   if(isAuthenticated){
-      dispatch(getAllNotes());
-   }
-  },[dispatch, allNotes, isAuthenticated]);
+  useEffect(() => {
+    dispatch(getAllNotes());
+  }, [allNotes, dispatch ]);
 
   return <Content/>;
 };;

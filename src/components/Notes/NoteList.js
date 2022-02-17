@@ -9,12 +9,15 @@ import classes from "./Note.module.css";
 
 const NoteList = () => {
   const { filteredNotes, refresh } = useSelector((state) => state.note);
+  const { token } = useSelector((state) => state.users);
 
   const dispatch = useDispatch();
 
   useEffect(()=>{
-    dispatch(fetchNotes());
-  },[refresh, dispatch])
+    if(token){
+      dispatch(fetchNotes());
+    }
+  },[refresh, token, dispatch])
 
   return (
     <div className={classes['note-list']}>
