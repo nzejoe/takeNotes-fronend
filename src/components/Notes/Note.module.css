@@ -1,13 +1,11 @@
 .note-list {
   position: relative;
-  display: flex;
-  flex-wrap: wrap;
   width: 100%;
 }
 
 .note {
   position: relative;
-  flex: 0 0 240px;
+  max-width: 240px;
   margin: .2rem;
   outline: none;
   padding: 1rem;
@@ -19,7 +17,6 @@
 }
 
 .note__text{
-  width: 100%;
   color: var(--primary-dark-gray);
 }
 
@@ -154,12 +151,27 @@
   }
 }
 
+@media screen and (min-width: 600px) {
+
+  .note-list{
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 auto;
+  }
+
+  .note{
+    flex: 0 0 240px;
+  }
+}
+
+
 /* @media screen and (max-width: 599px) {
   .form__update{
     width: 90%;
     margin: auto;
   }
 } */
+
 
 
 @media screen and (hover: none) {
@@ -171,3 +183,4 @@
     transform: scale(.7);
   }
 }
+

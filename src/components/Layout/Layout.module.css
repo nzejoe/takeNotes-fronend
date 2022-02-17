@@ -36,40 +36,27 @@
 
 .main {
   width: 100%;
-  display: flex;
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: 1fr 10fr;
   justify-content: space-between;
   margin-top: 5rem;
 }
 
-.note__list {
-  width: 100%;
-  display: flex;
-  justify-content: space-around;
-  margin: auto;
-}
-
 .aside {
-  flex: 0 0 10%;
   transition: all 1s;
 }
 
 .content__main {
   padding: .5rem;
-  flex: 0 0 90%;
 }
 @media screen and (max-width: 599px) {
   .input__wrapper{
-    width: 95%;
-    /* margin: 1rem auto */
-  }
-
-  .aside {
-    flex: 0 0 15%;
+    width: 100%;
   }
 
   .content__main {
-    flex: 0 0 85%;
-    padding-right: 1.5rem;
+    padding-right: 1rem;
   }
 }
 @media screen and (max-width: 699px), (max-width: 799px) , (max-width: 899px), (max-width: 999px){
