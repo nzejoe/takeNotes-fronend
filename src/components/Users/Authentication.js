@@ -6,7 +6,7 @@ import { styles } from ".";
 const Authentication = ({children}) => {
   return (
     <div className={styles.container}>
-      {children}
+      <div className={styles.container__inner}>{children}</div>
     </div>
   );
 };
